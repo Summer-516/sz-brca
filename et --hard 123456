@@ -1,0 +1,117 @@
+[33m8112581[m[33m ([m[1;36mHEAD -> [m[1;32msummer[m[33m)[m feat: 完成下拉框点击展示表格
+[33m2ca6302[m feat: 使用封装的表格完成下拉展示表格
+[33mc66b644[m feat: 完成12种静态组合方式
+[33mf1d8802[m feat: 周期实验室记录动态展示静态部分（基本静态完成
+[33m8431b93[m feat: 周期实验室记录静态(没有不同类型的
+[33m56c54a2[m feat: 完成男科手术记录
+[33m092ba0b[m feat: 修改诊疗记录的栅格间隔
+[33made99ef[m feat: 男科手术记录仅画图
+[33m0bf20e3[m feat: 修改辅助病例首页Promise all的逻辑
+[33m35f8c68[m Merge branch 'dev' of github.com:chenyuyou1/reproductive into summer
+[33m8ac096f[m feat: 新增静态页面
+[33mfb55106[m feat: 诊疗记录静态
+[33mbcd12ef[m Merge branch 'summer' of github.com:chenyuyou1/reproductive into dev  简单合并下静态页面。
+[33m0de8526[m feat: 页面添加校验
+[33m1f052e5[m feat: 完成再次ART的补充部分的数字校验
+[33m2fa1f26[m feat: 添加完再次ART一、二部分的数字校验
+[33md36cdae[m Merge branch 'dev' of github.com:chenyuyou1/reproductive into summer
+[33mb41f1e5[m feat: 静态
+[33m85a190d[m feat: 新增静态页面
+[33m5faad41[m feat: 医患沟通记录静态
+[33mc9c890b[m feat: 夫妇病例概要静态
+[33m415e059[m feat: 新增静态页面
+[33m10f4d1a[m feat: 合并前提交
+[33mfe5c584[m feat: 添加三个静态页面
+[33m8976421[m feat: 添加三个静态页面
+[33m24bacbc[m feat: 修改系统名字文本
+[33m8b1addb[m feat: 修改系统名字文本
+[33m4538970[m feat: 修改系统名字文本
+[33m3b2e38d[m feat: 提交代码
+[33mef93dde[m feat: 提交代码
+[33m322084b[m feat: 修改testtube的icon
+[33m9fb24c1[m feat: 试管静态页面提交
+[33m990034e[m feat: 试管静态页面提交
+[33me51b95b[m feat: 修改试管图标
+[33md13312b[m Merge branch 'dev' of github.com:chenyuyou1/reproductive into summer
+[33ma411692[m feat: 修改ART中飘红
+[33me63f045[m feat: 合并分支代码
+[33ma022142[m feat: 提交功能优化代码
+[33m6109ec5[m feat: 修改输入框的宽度等调整
+[33mfc8afdc[m feat: 补充部分静态初步完成(变量名要更改)
+[33ma950483[m feat: 修改左右卵巢offset
+[33mfbfc475[m feat: partTwo基础静态
+[33mffc4b4d[m feat: 修改partOne表单名
+[33m8c9c486[m feat: 修改国籍的顺序
+[33me8e136f[m feat: add new
+[33m946c3c6[m feat: 提交代码
+[33m12c386b[m feat: 提交代码
+[33m2ce7e59[m feat: 提交代码
+[33me0b3b01[m Merge branch 'dev' of github.com:chenyuyou1/reproductive into summer
+[33m74488dd[m feat: no change
+[33m58520b2[m feat: 预问诊问题列表页面
+[33m3be6132[m feat: 提交代码。1联调问诊流程
+[33m384252c[m feat: change inputNumber
+[33m51b83cc[m feat: chat login
+[33m46b43f3[m Merge branch 'dev' of github.com:chenyuyou1/reproductive into summer
+[33m9f2e4d5[m feat: change login
+[33md69d702[m feat: nothing
+[33mc1f1e25[m feat: 更新代码
+[33ma479949[m Merge branch 'summer' of github.com:chenyuyou1/reproductive into dev
+[33me5ef9a3[m feat: 新增ocr
+[33m452ca4a[m feat: 提交
+[33maa2e700[m feat: 合并代码
+[33m0a3e69e[m feat: 提交上传用户照片页面
+[33m9105de8[m Merge branch 'dev' of github.com:chenyuyou1/reproductive into summer
+[33m5851c18[m feat: refactoring
+[33mafd208e[m feat: 新增患者信息展示页面
+[33mcd52920[m Merge branch 'dev' of github.com:chenyuyou1/reproductive into summer
+[33mc0c0770[m feat: add questions
+[33m2af4566[m feat: 联调初诊
+[33m0ca8cf6[m feat: 合并代码
+[33m0024c28[m feat: 接口联调
+[33m9c4135d[m feat: 新增医生端诊断页面
+[33m3ca93c4[m feat: preConsultationToC
+[33m9dcc93c[m Merge branch 'dev' of github.com:chenyuyou1/reproductive into summer
+[33m79d0283[m feat: before change
+[33m71fd34f[m feat: change questions
+[33me88f377[m feat: change rules
+[33m72347d2[m feat: change date
+[33m5d54f8b[m feat: 优化打包代码
+[33m1008c9f[m Merge branch 'dev' of github.com:chenyuyou1/reproductive into summer
+[33m99c576c[m feat: showLinkFalse
+[33mdb786f9[m Merge branch 'summer' of github.com:chenyuyou1/reproductive into dev
+[33m5d12318[m feat: chathistory
+[33ma903902[m feat: 优化代码
+[33m9c23cf2[m feat: 合并代码
+[33m86dc0bd[m feat: 优化代码
+[33m222251c[m feat: chatchat
+[33ma594082[m Merge branch 'dev' of github.com:chenyuyou1/reproductive into summer
+[33m286014a[m feat: 新增预问诊客户端静态
+[33ma2c1b67[m Merge branch 'dev' of github.com:chenyuyou1/reproductive into summer
+[33ma1131bd[m feat: all
+[33m700b72c[m feat: 新增预问诊客户端静态
+[33md765cc4[m feat: 新增预问诊客户端静态
+[33mafad6bf[m feat: delete case
+[33m186f891[m feat: change IDcard
+[33m2c32be6[m Merge branch 'dev' of github.com:chenyuyou1/reproductive into summer
+[33m745c49f[m feat: one change
+[33m9830395[m feat: outpatient
+[33m2e1e59a[m feat: 优化代码
+[33md7d9cd7[m feat: 合并代码
+[33med56e15[m Merge branch 'dev' of github.com:chenyuyou1/reproductive into summer
+[33m78c1f67[m feat: ts
+[33m1666712[m fix: 用户列表页面优化
+[33m47e578d[m fix: 用户列表页面优化
+[33md35b7ed[m feat: add and read over
+[33md143aed[m Merge branch 'dev' of github.com:chenyuyou1/reproductive into summer
+[33mc10c2ba[m feat: 用户列表接口联调
+[33m7c700f2[m feat: once over
+[33m8defe66[m feat: toDetail
+[33mfd1f6b2[m Merge branch 'dev' of github.com:chenyuyou1/reproductive into summer
+[33m93ef02c[m feat: interface
+[33medc17df[m feat: 查看用户列表修改
+[33m236699d[m feat: 查看用户列表修改
+[33m11b0227[m feat: 查看用户列表修改
+[33m023d2fd[m feat: 联调用户注册接口
+[33m8ad86fa[m Merge branch 'dev' of github.com:chenyuyou1/reproductive into summer
+[33ma0cb734[m feat: 登录接口联调
