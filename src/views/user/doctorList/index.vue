@@ -155,7 +155,8 @@ const handleClose = () => {
 const getUserList = () => {
   getUserListApi(page.value, pageSize.value)
     .then(res => {
-      tableData.value = res.data;
+      tableData.value = res.data.list;
+      total.value = res.data.total;
     })
     .catch(message => {
       message(message || "获取医生列表失败", {
