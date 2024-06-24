@@ -20,15 +20,15 @@ export type UserResult = {
   };
 };
 
-type Result = {
-  success: boolean;
-  data?: {
-    /** 列表数据 */
-    list: Array<any>;
-    /** 总数 */
-    total?: number;
-  };
-};
+// type Result = {
+//   success: boolean;
+//   data?: {
+//     /** 列表数据 */
+//     list: Array<any>;
+//     /** 总数 */
+//     total?: number;
+//   };
+// };
 type ResultDept = {
   success: boolean;
   data?: Array<any>;
@@ -51,21 +51,29 @@ export const getLogin = (data?: object) => {
 };
 
 /** 注册 */
+// export const getRegister = (data?: object) => {
+//   return http.request<UserResult>("post", baseUrlApi("/oauth/register/"), {
+//     data
+//   });
+// };
 export const getRegister = (data?: object) => {
-  return http.request<UserResult>("post", baseUrlApi("/oauth/register/"), {
-    data
-  });
+  return http.request<UserResult>("post", baseUrlApi("/auth/regist"), { data });
 };
-
 /** 刷新token */
 export const refreshTokenApi = (data?: object) => {
   return http.request<RefreshTokenResult>("post", "/refreshToken", { data });
 };
 /** 获取用户管理列表 */
-export const getUserList = (data?: object) => {
-  return http.request<Result>("get", baseUrlApi("/auth/list"), {
-    params: data
-  });
+// export const getUserList = (data?: object) => {
+//   return http.request<Result>("get", baseUrlApi("/auth/list"), {
+//     params: data
+//   });
+// };
+export const getUserListApi = (page: any, pageSize: any) => {
+  return http.request<any>(
+    "get",
+    baseUrlApi(`/auth/users?page=${page}&pageSize=${pageSize}`)
+  );
 };
 
 /** 添加账号 */

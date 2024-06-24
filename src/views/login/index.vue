@@ -93,9 +93,9 @@ const onLogin = async (formEl: FormInstance | undefined) => {
       getLogin(ruleForm)
         .then(res => {
           if (res.code === 1) {
-            const { token, userId, roles, name } = res.data;
+            const { accessToken, userId, roles, name } = res.data;
             setToken({
-              accessToken: token,
+              accessToken: accessToken,
               userId: userId,
               roles: roles,
               username: name

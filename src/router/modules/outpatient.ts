@@ -17,6 +17,14 @@ export default {
       }
     },
     {
+      path: "/outpatient/residentAdmitNote",
+      name: "ResidentAdmitNote",
+      component: () => import("@/views/outpatient/residentAdmitNote/index.vue"),
+      meta: {
+        title: "入院记录"
+      }
+    },
+    {
       path: "/outpatient/pathologicalReport",
       name: "PathologicalReport",
       component: () =>
