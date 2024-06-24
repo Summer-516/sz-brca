@@ -6,12 +6,13 @@ import { loginRules } from "./utils/rule";
 import { useNav } from "@/layout/hooks/useNav";
 import type { FormInstance } from "element-plus";
 import { useLayout } from "@/layout/hooks/useLayout";
-import { bg, avatar, illustration } from "./utils/static";
+// import { bg, avatar, illustration } from "./utils/static";
+import { bg } from "./utils/static";
 import { useRenderIcon } from "@/components/ReIcon/src/hooks";
 import {
   ref,
   reactive,
-  toRaw,
+  // toRaw,
   onMounted,
   onBeforeUnmount,
   computed
@@ -160,11 +161,11 @@ onBeforeUnmount(() => {
     </div>
     <div class="login-container">
       <div class="img">
-        <component :is="toRaw(illustration)" />
+        <!-- <component :is="toRaw(illustration)" /> -->
       </div>
       <div class="login-box">
         <div class="login-form">
-          <avatar class="avatar" />
+          <!-- <avatar class="avatar" /> -->
           <Motion>
             <h2 class="outline-none">{{ abbreviation }}</h2>
             <h2 class="outline-none">{{ title }}</h2>
