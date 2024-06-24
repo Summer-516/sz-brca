@@ -173,13 +173,11 @@ const initUserForm = () => {
 };
 const addForm = ref(initUserForm());
 const handleSizeChange = (val: number) => {
-  // console.log(`${val} items per page`);
-  page.value = val;
+  pageSize.value = val;
   getPatientList();
 };
 const handleCurrentChange = (val: number) => {
-  // console.log(`current page: ${val}`);
-  pageSize.value = val;
+  page.value = val;
   getPatientList();
 };
 const handleClick = () => {
@@ -213,10 +211,11 @@ const handleClose = () => {
 const getPatientList = () => {
   getPatientListApi(page.value, pageSize.value)
     .then(res => {
-      tableData.value = res.data;
+      tableData.value = res.data.list;
+      total.value = res.data.total;
     })
     .catch(message => {
-      message(message || "获取医生列表失败", {
+      message(message || "获取患者列表失败", {
         type: "warning"
       });
     });
