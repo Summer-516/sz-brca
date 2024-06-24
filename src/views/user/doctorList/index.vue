@@ -56,7 +56,7 @@
         width="500"
         :before-close="handleClose"
       >
-        <el-form :model="addForm" label-width="auto" :inline="true">
+        <el-form :model="addForm" label-width="100px" :inline="true">
           <el-form-item label="姓名">
             <el-input v-model="addForm.name" style="width: 240px" />
           </el-form-item>
@@ -126,15 +126,14 @@ const handleCurrentChange = (val: number) => {
   page.value = val;
   getUserList();
 };
-// 点击新增按钮
+// 点击"新增"按钮
 const handleAddBtn = () => {
   showAddDialog.value = true;
 };
-// 点击新增医生账号的确定按钮
+// 点击新增医生账号dialog的确定按钮
 const handleAdd = () => {
   getRegister(addForm.value)
-    .then(res => {
-      console.log("res111", res);
+    .then(() => {
       message("新增账号成功", { type: "success" });
       handleClose();
     })
