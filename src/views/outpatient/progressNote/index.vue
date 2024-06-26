@@ -169,7 +169,7 @@
               </el-select>
             </el-form-item>
             <el-form-item>
-              <el-button type="primary" @click="firstCource">提交</el-button>
+              <el-button type="primary" @click="addFirstCource">提交</el-button>
             </el-form-item>
           </el-col>
         </el-row>
@@ -178,8 +178,12 @@
   </div>
 </template>
 <script setup lang="ts">
-import { ref, computed } from "vue";
-import { firstCourceApi } from "@/api/patient";
+import { ref, computed, onMounted } from "vue";
+import { useRoute } from "vue-router";
+import { message } from "@/utils/message";
+import { addFirstCourceApi, getFirstCourceApi } from "@/api/patient";
+const route = useRoute();
+const patientId = ref("");
 const progressForm = ref({
   登记号: "0022144215",
   住院号: "11",
@@ -201,7 +205,7 @@ const progressForm = ref({
   医生: "",
   上级医生: ""
 });
-
+// 组合"诊断依据及鉴别诊断"
 const combinedDiagnosis = computed(() => {
   return (
     `1、初步诊断：${progressForm.value.tentativeDiagnosis || ""}；` +
@@ -209,18 +213,92 @@ const combinedDiagnosis = computed(() => {
     `3、鉴别诊断：${progressForm.value.differentialDiagnosis || ""}`
   );
 });
-
-const firstCource = () => {
-  const patientId = "667b80637dd8c2821e520d27";
-  const dataToSend = {
-    ...progressForm.value,
-    诊断依据及鉴别诊断: combinedDiagnosis.value
+///  处理"诊断依据及鉴别诊断"
+const processDiagnosisInfo = diagnosisString => {
+  const parts = diagnosisString.split("；");
+  return {
+    tentativeDiagnosis: parts[0].replace("1、初步诊断：", "").trim(),
+    diagnosticBasis: parts[1].replace("2、诊断依据：", "").trim(),
+    differentialDiagnosis: parts[2].replace("3、鉴别诊断：", "").trim()
   };
-  delete dataToSend.tentativeDiagnosis;
-  delete dataToSend.diagnosticBasis;
-  delete dataToSend.differentialDiagnosis;
-  console.log("dataToSend", dataToSend);
-  firstCourceApi(patientId, dataToSend);
 };
+// 请求添加病程记录
+const addFirstCource = async () => {
+  try {
+    const {
+      tentativeDiagnosis: _,
+      diagnosticBasis: __,
+      differentialDiagnosis: ___,
+      ...restFormData
+    } = progressForm.value;
+    const dataToSend = {
+      ...restFormData,
+      诊断依据及鉴别诊断: combinedDiagnosis.value
+    };
+    await addFirstCourceApi(patientId.value, dataToSend);
+    message("添加病程记录成功", { type: "success" });
+  } catch (error) {
+    message("添加病程记录失败", { type: "warning" });
+  }
+};
+// 请求获取病程记录
+// const getFirstCource = () => {
+//   getFirstCourceApi(patientId.value)
+//     .then(res => {
+//       const data = res.data.records[0]?.firstCourse;
+//       Object.keys(progressForm.value).forEach(key => {
+//         if (key in data) {
+//           progressForm.value[key] = data[key];
+//         }
+//       });
+//       // 特殊处理 time 和 admissionTime
+//       progressForm.value.time = new Date(data.time);
+//       progressForm.value.admissionTime = new Date(data.admissionTime);
+//       // 处理 诊断依据及鉴别诊断
+//       const diagnosisParts = data.诊断依据及鉴别诊断.split("；");
+//       progressForm.value.tentativeDiagnosis = diagnosisParts[0]
+//         .replace("1、初步诊断：", "")
+//         .trim();
+//       progressForm.value.diagnosticBasis = diagnosisParts[1]
+//         .replace("2、诊断依据：", "")
+//         .trim();
+//       progressForm.value.differentialDiagnosis = diagnosisParts[2]
+//         .replace("3、鉴别诊断：", "")
+//         .trim();
+//       message("获取病程记录成功", { type: "success" });
+//     })
+//     .catch(() => {
+//       message("获取病程记录失败", { type: "warning" });
+//     });
+// };
+
+const getFirstCource = async () => {
+  try {
+    const response = await getFirstCourceApi(patientId.value);
+    const data = response.data.records[0]?.firstCourse;
+    if (!data) {
+      throw new Error("未找到病程记录");
+    }
+    const { 诊断依据及鉴别诊断, time, admissionTime, ...rest } = data;
+    Object.assign(progressForm.value, {
+      ...rest,
+      time: new Date(time),
+      admissionTime: new Date(admissionTime),
+      ...processDiagnosisInfo(诊断依据及鉴别诊断)
+    });
+    message("获取病程记录成功", { type: "success" });
+  } catch (error) {
+    message(`获取病程记录失败: ${error.message || "未知错误"}`, {
+      type: "warning"
+    });
+  }
+};
+onMounted(() => {
+  const id = route.query.id;
+  if (id) {
+    patientId.value = id;
+    getFirstCource();
+  }
+});
 </script>
 <style lang="scss" scoped></style>

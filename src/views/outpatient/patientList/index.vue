@@ -85,8 +85,16 @@
         <el-table-column prop="aa" label="主任医师" />
         <el-table-column prop="aa" label="医生便签" />
         <el-table-column prop="aa" label="病案号" />
-        <el-table-column fixed="right" label="操作" width="120">
-          <template #default>
+        <el-table-column fixed="right" label="操作" width="200">
+          <template #default="{ row }">
+            <el-button
+              link
+              type="primary"
+              size="small"
+              @click="handleProgressBtn(row)"
+            >
+              添加病程记录
+            </el-button>
             <el-button link type="danger" size="small" @click="handleClick">
               删除
             </el-button>
@@ -143,6 +151,7 @@
 </template>
 <script setup lang="ts">
 import { ref, reactive, onMounted } from "vue";
+import { useRouter } from "vue-router";
 import { Search, Plus } from "@element-plus/icons-vue";
 import {
   addPatientApi,
@@ -150,7 +159,7 @@ import {
   getPatientListApi
 } from "@/api/patient.ts";
 import { message } from "@/utils/message";
-
+const router = useRouter();
 const showAddDialog = ref(false);
 const page = ref(1);
 const pageSize = ref(10);
@@ -179,6 +188,14 @@ const handleSizeChange = (val: number) => {
 const handleCurrentChange = (val: number) => {
   page.value = val;
   getPatientList();
+};
+// 点击添加病程记录按钮
+const handleProgressBtn = row => {
+  console.log("row", row._id);
+  router.push({
+    path: "/outpatient/progressNote",
+    query: { id: row._id }
+  });
 };
 const handleClick = () => {
   console.log("click");

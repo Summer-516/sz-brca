@@ -24,12 +24,19 @@ export const getPatientListApi = (page: any, pageSize: any) => {
   );
 };
 // 请求添加首程病历
-export const firstCourceApi = (patientId: any, data: any) => {
+export const addFirstCourceApi = (patientId: any, data: any) => {
   return http.request<any>(
     "post",
     baseUrlApi(`/record/${patientId}/fistCource`),
     {
       data
     }
+  );
+};
+// 请求获取首程病历
+export const getFirstCourceApi = (patientId: any) => {
+  return http.request<any>(
+    "get",
+    baseUrlApi(`/record/${patientId}/fistCource`)
   );
 };
