@@ -23,3 +23,13 @@ export const getPatientListApi = (page: any, pageSize: any) => {
     baseUrlApi(`/patient/list?page=${page}&pageSize=${pageSize}`)
   );
 };
+// 请求添加首程病历
+export const firstCourceApi = (patientId: any, data: any) => {
+  return http.request<any>(
+    "post",
+    baseUrlApi(`/record/${patientId}/fistCource`),
+    {
+      data
+    }
+  );
+};

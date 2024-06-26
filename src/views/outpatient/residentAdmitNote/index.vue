@@ -117,7 +117,9 @@
         <!-- 既往史 -->
         <el-row>
           <el-col :span="24">
-            <el-form-item label="既往史：" />
+            <el-form-item label="既往史：">
+              <el-input v-show="false" />
+            </el-form-item>
           </el-col>
         </el-row>
         <el-row>
@@ -143,7 +145,7 @@
         </el-row>
         <el-row>
           <el-col :offset="2" :span="22">
-            <el-form-item label="手术外伤史：">
+            <el-form-item label="手术外伤史：" class="bold-label">
               <el-select
                 v-model="caseForm.haveOperation"
                 filterable
@@ -244,7 +246,7 @@
         <!-- 个人史 -->
         <el-row>
           <el-col>
-            <el-form-item label="个人史：">
+            <el-form-item label="个人史：" class="bold-label">
               <p>出生地{{ infoForm.birthplace }}，</p>
               <el-select v-model="caseForm.livingHistory" style="width: 180px">
                 <el-option label="无外地久居史" value="无外地久居史" />
@@ -308,7 +310,7 @@
         <!-- 婚育史 -->
         <el-row>
           <el-col>
-            <el-form-item label="婚育史：">
+            <el-form-item label="婚育史：" class="bold-label">
               <el-select
                 v-model="caseForm.maritalStatus"
                 placeholder="婚姻状况"
@@ -348,7 +350,7 @@
         </el-row>
         <el-row>
           <el-col>
-            <el-form-item label="月经史：">
+            <el-form-item label="月经史：" class="bold-label">
               <p>初潮年龄&nbsp;</p>
               <el-input v-model="caseForm.menarcheAge" style="width: 80px" />
               <p>&nbsp;岁&nbsp;</p>
@@ -382,7 +384,7 @@
         <!-- 家族史 -->
         <el-row>
           <el-col>
-            <el-form-item label="家族史：">
+            <el-form-item label="家族史：" class="bold-label">
               <p>父亲&nbsp;</p>
               <el-select v-model="caseForm.fatherStatus" style="width: 200px">
                 <el-option label="健在" value="健在" />
@@ -586,7 +588,7 @@
         </el-row>
         <el-row>
           <el-col>
-            <el-form-item label="一般状况：">
+            <el-form-item label="一般状况：" class="bold-label">
               <p>发育&nbsp;</p>
               <el-select
                 v-model="checkupForm.development"
@@ -757,7 +759,7 @@
         </el-row>
         <el-row>
           <el-col>
-            <el-form-item label="全身皮肤、粘膜：">
+            <el-form-item label="全身皮肤、粘膜：" class="bold-label">
               <p>色泽&nbsp;</p>
               <el-select
                 v-model="checkupForm.colourAndLustre"
@@ -1219,7 +1221,7 @@
         </el-row>
         <el-row>
           <el-col>
-            <el-form-item label="口腔：">
+            <el-form-item label="口腔：" class="bold-label">
               <p>口腔&nbsp;</p>
               <el-select
                 v-model="checkupForm.mouthOdor"
@@ -1352,7 +1354,7 @@
         </el-row>
         <el-row>
           <el-col>
-            <el-form-item label="颈部：">
+            <el-form-item label="颈部：" class="bold-label">
               <el-select
                 v-model="checkupForm.neck"
                 filterable
@@ -1450,7 +1452,7 @@
         </el-row>
         <el-row>
           <el-col>
-            <el-form-item label="胸部：">
+            <el-form-item label="胸部：" class="bold-label">
               <p>胸廓&nbsp;</p>
               <el-select
                 v-model="checkupForm.thorax"
@@ -1516,12 +1518,12 @@
         </el-row>
         <el-row>
           <el-col>
-            <el-form-item label="肺部：" />
+            <el-form-item label="肺部：" class="bold-label" />
           </el-col>
         </el-row>
         <el-row>
           <el-col :offset="2" :span="22">
-            <el-form-item label="视诊：">
+            <el-form-item label="视诊：" class="bold-label">
               <el-select
                 v-model="checkupForm.breathingMovement"
                 filterable
@@ -1563,7 +1565,7 @@
         </el-row>
         <el-row>
           <el-col :offset="2" :span="22">
-            <el-form-item label="触诊：">
+            <el-form-item label="触诊：" class="bold-label">
               <p>双肺语音震颤&nbsp;</p>
               <el-select
                 v-model="checkupForm.vocalFremitus"
@@ -1599,7 +1601,7 @@
         </el-row>
         <el-row>
           <el-col :offset="2" :span="22">
-            <el-form-item label="叩诊：">
+            <el-form-item label="叩诊：" class="bold-label">
               <el-select
                 v-model="checkupForm.lungsPart"
                 filterable
@@ -1677,7 +1679,7 @@
         </el-row>
         <el-row>
           <el-col :offset="2" :span="22">
-            <el-form-item label="听诊：">
+            <el-form-item label="听诊：" class="bold-label">
               <p>双肺呼吸音&nbsp;</p>
               <el-select
                 v-model="checkupForm.breathSounds"
@@ -1786,7 +1788,7 @@
         </el-row>
         <el-row>
           <el-col>
-            <el-form-item label="心脏：" />
+            <el-form-item label="心脏：" class="bold-label" />
           </el-col>
         </el-row>
         <el-row>
@@ -1847,7 +1849,7 @@
         </el-row>
         <el-row>
           <el-col :offset="2" :span="22">
-            <el-form-item label="听诊：">
+            <el-form-item label="听诊：" class="bold-label">
               <p>心率&nbsp;</p>
               <el-input
                 v-model="checkupForm.heartRate"
@@ -1944,7 +1946,7 @@
         </el-row>
         <el-row>
           <el-col :offset="2" :span="22">
-            <el-form-item label="周围血管征：">
+            <el-form-item label="周围血管征：" class="bold-label">
               <el-select
                 v-model="checkupForm.vascularSign"
                 filterable
@@ -1977,12 +1979,12 @@
         </el-row>
         <el-row>
           <el-col>
-            <el-form-item label="腹部：" />
+            <el-form-item label="腹部：" class="bold-label" />
           </el-col>
         </el-row>
         <el-row>
           <el-col :offset="2" :span="22">
-            <el-form-item label="视诊：">
+            <el-form-item label="视诊：" class="bold-label">
               <el-select
                 v-model="checkupForm.pulse"
                 filterable
@@ -2034,7 +2036,7 @@
         </el-row>
         <el-row>
           <el-col :offset="2" :span="22">
-            <el-form-item label="触诊：">
+            <el-form-item label="触诊：" class="bold-label">
               <el-select
                 v-model="checkupForm.tensity"
                 filterable
@@ -2206,7 +2208,7 @@
         </el-row>
         <el-row>
           <el-col :offset="2" :span="22">
-            <el-form-item label="肾脏：">
+            <el-form-item label="肾脏：" class="bold-label">
               <p>肾脏未触及。&nbsp;</p>
               <el-select
                 v-model="checkupForm.kidneyPart"
@@ -2240,7 +2242,7 @@
         </el-row>
         <el-row>
           <el-col :offset="2" :span="22">
-            <el-form-item label="叩诊：">
+            <el-form-item label="叩诊：" class="bold-label">
               <p>腹部叩诊呈鼓音，肝浊音界&nbsp;</p>
               <el-select
                 v-model="checkupForm.border"
@@ -2303,7 +2305,7 @@
         </el-row>
         <el-row>
           <el-col>
-            <el-form-item label="肛门及外生殖器：">
+            <el-form-item label="肛门及外生殖器：" class="bold-label">
               <p>生殖器&nbsp;</p>
               <el-select
                 v-model="checkupForm.genitals"
@@ -2335,7 +2337,7 @@
         </el-row>
         <el-row>
           <el-col>
-            <el-form-item label="脊柱及四肢：" />
+            <el-form-item label="脊柱及四肢：" class="bold-label" />
           </el-col>
         </el-row>
         <el-row>
@@ -2360,7 +2362,7 @@
         </el-row>
         <el-row>
           <el-col :offset="2" :span="22">
-            <el-form-item label="四肢：">
+            <el-form-item label="四肢：" class="bold-label">
               <p>四肢&nbsp;</p>
               <el-select
                 v-model="checkupForm.allFours"
@@ -2407,7 +2409,7 @@
         </el-row>
         <el-row>
           <el-col>
-            <el-form-item label="神经反射：">
+            <el-form-item label="神经反射：" class="bold-label">
               <el-input
                 v-model="checkupForm.physiologicalSite"
                 style="width: 140px"
@@ -2473,7 +2475,7 @@
           </el-row>
           <el-row>
             <el-form-item>
-              <p>VTE评分&nbsp;</p>
+              <p>VTE评分：&nbsp;</p>
               <el-input
                 v-model="auxiliaryForm.VTE"
                 placeholder="VTE评分"
@@ -2746,5 +2748,10 @@ const auxiliaryForm = reactive({
 
 p {
   overflow-wrap: break-word;
+}
+
+:deep(.bold-label.el-form-item .el-form-item__label) {
+  font-weight: bold !important;
+  /* 添加其他需要的样式 */
 }
 </style>
