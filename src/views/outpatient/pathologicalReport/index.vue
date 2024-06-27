@@ -220,7 +220,9 @@ defineOptions({
   name: "PathologicalReport"
 });
 
-import { reactive } from "vue";
+import { reactive, onMounted } from "vue";
+import { useRoute } from "vue-router";
+const route = useRoute();
 const form = reactive({
   type: [],
   classification: "",
@@ -243,7 +245,6 @@ const form = reactive({
   P120: "",
   Ki67: ""
 });
-
 // 联级选择器
 const props = {
   expandTrigger: "hover" as const
@@ -612,7 +613,14 @@ const handleChange = value => {
 // const onSubmit = () => {
 //   console.log("submit!");
 // };
+onMounted(() => {
+  const id = route.query.id;
+  if (id) {
+    console.log("id", id);
+  }
+});
 </script>
+
 <style lang="scss" scoped>
 .subtitle {
   margin-bottom: 15px;

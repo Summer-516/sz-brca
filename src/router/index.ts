@@ -23,8 +23,8 @@ import {
 } from "./utils";
 import { buildHierarchyTree } from "@/utils/tree";
 import { isUrl, openLink, storageSession } from "@pureadmin/utils";
-
 import remainingRouter from "./modules/remaining";
+// import { usePatientStore } from "@/store/modules/patient";
 
 /** 自动导入全部静态路由，无需再手动引入！匹配 src/router/modules 目录（任何嵌套级别）中具有 .ts 扩展名的所有文件，除了 remaining.ts 文件
  * 如何匹配所有文件请看：https://github.com/mrmlnc/fast-glob#basic-syntax
@@ -97,6 +97,12 @@ export function resetRouter() {
 const whiteList = ["/login", "/chat", "/chat/history"];
 
 router.beforeEach((to: toRouteType, _from, next) => {
+  // 患者列表
+  // const patientStore = usePatientStore();
+  // if (to.name !== "PatientList" && !patientStore.selectedPatient) {
+  //   next({ name: "PatientList" });
+  //   return;
+  // }
   if (to.meta?.keepAlive) {
     const newMatched = to.matched;
     handleAliveRoute(newMatched, "add");

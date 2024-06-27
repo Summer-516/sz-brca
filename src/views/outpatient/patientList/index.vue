@@ -63,7 +63,12 @@
           </el-form>
         </div>
       </template>
-      <el-table :data="tableData" stripe style="width: 100%">
+      <el-table
+        :data="tableData"
+        stripe
+        style="width: 100%"
+        @row-dblclick="row => changePatient(row)"
+      >
         <el-table-column prop="aa" label="序号" />
         <el-table-column prop="aa" label="登记号" />
         <el-table-column prop="aa" label="账号" />
@@ -94,6 +99,14 @@
               @click="handleProgressBtn(row)"
             >
               添加病程记录
+            </el-button>
+            <el-button
+              link
+              type="primary"
+              size="small"
+              @click="handleReportBtn(row)"
+            >
+              添加病理报告
             </el-button>
             <el-button link type="danger" size="small" @click="handleClick">
               删除
@@ -159,7 +172,9 @@ import {
   getPatientListApi
 } from "@/api/patient.ts";
 import { message } from "@/utils/message";
+import { useOutpatientStore } from "@/store/modules/outpatient";
 const router = useRouter();
+const outpatientStore = useOutpatientStore();
 const showAddDialog = ref(false);
 const page = ref(1);
 const pageSize = ref(10);
@@ -191,14 +206,25 @@ const handleCurrentChange = (val: number) => {
 };
 // 点击添加病程记录按钮
 const handleProgressBtn = row => {
-  console.log("row", row._id);
   router.push({
     path: "/outpatient/progressNote",
     query: { id: row._id }
   });
 };
+// 点击添加病理报告按钮
+const handleReportBtn = row => {
+  router.push({
+    path: "/outpatient/pathologicalReport",
+    query: { id: row._id }
+  });
+};
 const handleClick = () => {
   console.log("click");
+};
+//
+const changePatient = row => {
+  console.log("双击的row", row);
+  outpatientStore.setSelectedPatient(row);
 };
 // 点击"新增"按钮
 const handleAddBtn = () => {

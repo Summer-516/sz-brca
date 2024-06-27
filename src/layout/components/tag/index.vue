@@ -5,7 +5,7 @@ import { useTags } from "../../hooks/useTag";
 import { routerArrays } from "@/layout/types";
 import { isEqual, isAllEmpty } from "@pureadmin/utils";
 import { useSettingStoreHook } from "@/store/modules/settings";
-import { ref, watch, unref, nextTick, onBeforeMount } from "vue";
+import { ref, watch, computed, unref, nextTick, onBeforeMount } from "vue";
 import { handleAliveRoute, delAliveRoutes } from "@/router/utils";
 import { useMultiTagsStoreHook } from "@/store/modules/multiTags";
 import { useResizeObserver, useDebounceFn, useFullscreen } from "@vueuse/core";
@@ -16,7 +16,23 @@ import ArrowDown from "@iconify-icons/ri/arrow-down-s-line";
 import ArrowRightSLine from "@iconify-icons/ri/arrow-right-s-line";
 import ArrowLeftSLine from "@iconify-icons/ri/arrow-left-s-line";
 import CloseBold from "@iconify-icons/ep/close-bold";
+import { useOutpatientStore } from "@/store/modules/outpatient";
+const outpatientStore = useOutpatientStore();
+// 使用 storeToRefs 来保持响应性
+import { storeToRefs } from "pinia";
+const { selectedPatient } = storeToRefs(outpatientStore);
 
+// 使用计算属性来处理可能的 undefined 值
+const patientInfo = computed(() => {
+  return selectedPatient.value;
+});
+
+watch(selectedPatient, newPatient => {
+  if (newPatient) {
+    console.log("患者信息已更新:", newPatient);
+    // 执行其他操作...
+  }
+});
 const {
   route,
   router,
@@ -510,6 +526,9 @@ onMounted(() => {
 </script>
 
 <template>
+  <div class="tags-view" v-if="patientInfo">
+    <span>{{ patientInfo.name }}/{{ patientInfo.phone }}</span>
+  </div>
   <div ref="containerDom" class="tags-view" v-if="!showTags">
     <span v-show="isShowArrow" class="arrow-left">
       <IconifyIconOffline :icon="ArrowLeftSLine" @click="handleScroll(200)" />
