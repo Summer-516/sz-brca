@@ -170,7 +170,7 @@ import {
   addPatientApi,
   registrationApi,
   getPatientListApi
-} from "@/api/patient.ts";
+} from "@/api/patient";
 import { message } from "@/utils/message";
 import { useOutpatientStore } from "@/store/modules/outpatient";
 const router = useRouter();

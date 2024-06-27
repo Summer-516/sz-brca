@@ -526,8 +526,11 @@ onMounted(() => {
 </script>
 
 <template>
-  <div class="tags-view" v-if="patientInfo">
-    <span>{{ patientInfo.name }}/{{ patientInfo.phone }}</span>
+  <div class="aaa" v-if="patientInfo">
+    <span>
+      {{ patientInfo.name }}&nbsp;&nbsp;&nbsp;&nbsp;/&nbsp;&nbsp;&nbsp;&nbsp;
+      {{ patientInfo.phone }}
+    </span>
   </div>
   <div ref="containerDom" class="tags-view" v-if="!showTags">
     <span v-show="isShowArrow" class="arrow-left">
@@ -627,4 +630,18 @@ onMounted(() => {
 
 <style lang="scss" scoped>
 @import "./index.scss";
+
+.aaa {
+  width: 100%;
+  height: 40px;
+  font-size: 14px;
+  font-weight: bold;
+  background: #fff;
+  padding-left: 15px;
+  display: flex;
+  align-items: center;
+  color: var(--el-text-color-primary);
+  position: relative;
+  box-shadow: 0 0 1px #888;
+}
 </style>
