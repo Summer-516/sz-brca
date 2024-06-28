@@ -211,6 +211,7 @@ const handleCurrentChange = (val: number) => {
 //     query: { id: row._id }
 //   });
 // };
+
 // 点击添加病理报告按钮
 const handleReportBtn = row => {
   router.push({
