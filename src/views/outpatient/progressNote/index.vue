@@ -42,8 +42,7 @@ const chooseType = row => {
   console.log("双击的row", row);
   if (row.type === "首次病程记录") {
     router.push({
-      path: "/outpatient/progressNote/firstCourse",
-      query: { id: row._id }
+      path: "/outpatient/progressNote/firstCourse"
     });
   }
 };
@@ -52,6 +51,9 @@ const handleClose = (done: () => void) => {
   ElMessageBox.confirm("确定关闭吗？")
     .then(() => {
       done();
+      router.push({
+        path: "/outpatient/patientList"
+      });
     })
     .catch(() => {
       // catch error

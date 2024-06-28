@@ -50,7 +50,28 @@ export default {
       component: () => import("@/views/outpatient/residentAdmitNote/index.vue"),
       meta: {
         title: "入院记录"
-      }
+      },
+      children: [
+        {
+          path: "/outpatient/residentAdmitNote",
+          name: "ResidentAdmitNote",
+          component: () =>
+            import("@/views/outpatient/residentAdmitNote/index.vue"),
+          meta: {
+            title: "入院记录"
+          }
+        },
+        {
+          path: "/outpatient/residentAdmitNote/beHospitalized",
+          name: "BeHospitalized",
+          component: () =>
+            import("@/views/outpatient/residentAdmitNote/beHospitalized.vue"),
+          meta: {
+            title: "入院记录",
+            showLink: false
+          }
+        }
+      ]
     },
     {
       path: "/outpatient/pathologicalReport",

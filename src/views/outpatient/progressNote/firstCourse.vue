@@ -245,36 +245,6 @@ const addFirstCource = async () => {
   }
 };
 // 请求获取病程记录
-// const getFirstCource = () => {
-//   getFirstCourceApi(patientId.value)
-//     .then(res => {
-//       const data = res.data.records[0]?.firstCourse;
-//       Object.keys(progressForm.value).forEach(key => {
-//         if (key in data) {
-//           progressForm.value[key] = data[key];
-//         }
-//       });
-//       // 特殊处理 time 和 admissionTime
-//       progressForm.value.time = new Date(data.time);
-//       progressForm.value.admissionTime = new Date(data.admissionTime);
-//       // 处理 诊断依据及鉴别诊断
-//       const diagnosisParts = data.诊断依据及鉴别诊断.split("；");
-//       progressForm.value.tentativeDiagnosis = diagnosisParts[0]
-//         .replace("1、初步诊断：", "")
-//         .trim();
-//       progressForm.value.diagnosticBasis = diagnosisParts[1]
-//         .replace("2、诊断依据：", "")
-//         .trim();
-//       progressForm.value.differentialDiagnosis = diagnosisParts[2]
-//         .replace("3、鉴别诊断：", "")
-//         .trim();
-//       message("获取病程记录成功", { type: "success" });
-//     })
-//     .catch(() => {
-//       message("获取病程记录失败", { type: "warning" });
-//     });
-// };
-
 const getFirstCource = async () => {
   try {
     const response = await getFirstCourceApi(patientId.value);
