@@ -291,7 +291,7 @@ onMounted(() => {
   //   patientId.value = id;
   //   getFirstCource();
   // }
-  console.log("selectedPatient", selectedPatient.value);
+  // console.log("selectedPatient", selectedPatient.value);
   const patient = selectedPatient.value;
   patientId.value = patient._id;
   if (patient.hasCourse === true) {

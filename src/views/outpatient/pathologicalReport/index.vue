@@ -209,6 +209,15 @@
             </el-form-item>
           </el-col>
         </el-row>
+        <el-divider />
+
+        <el-row>
+          <el-col :offset="22" :spa="2">
+            <el-form-item>
+              <el-button type="primary" @click="addPathology">提交</el-button>
+            </el-form-item>
+          </el-col>
+        </el-row>
       </el-form>
     </el-card>
   </div>
@@ -220,9 +229,15 @@ defineOptions({
   name: "PathologicalReport"
 });
 
-import { reactive, onMounted } from "vue";
-import { useRoute } from "vue-router";
-const route = useRoute();
+import { ref, reactive, onMounted, computed } from "vue";
+import { message } from "@/utils/message";
+import { addPathologyApi, getPathologyApi } from "@/api/patient";
+// import { useRoute } from "vue-router";
+// const route = useRoute();
+import { useOutpatientStore } from "@/store/modules/outpatient";
+const outpatientStore = useOutpatientStore();
+const selectedPatient = computed(() => outpatientStore.getSelectedPatient);
+const patientId = ref(null);
 const form = reactive({
   type: [],
   classification: "",
@@ -613,10 +628,44 @@ const handleChange = value => {
 // const onSubmit = () => {
 //   console.log("submit!");
 // };
+// 请求添加病理报告
+const addPathology = async () => {
+  try {
+    const data = await addPathologyApi(patientId.value, form);
+    console.log("data", data);
+    message("添加病理报告成功", { type: "success" });
+  } catch (error) {
+    message(`添加病理报告失败: ${error.message || "未知错误"}`, {
+      type: "warning"
+    });
+  }
+};
+// 请求获取病理报告
+const getPathology = async () => {
+  try {
+    const response = await getPathologyApi(patientId.value);
+    const data = response.data.records[0].病理诊断;
+    Object.assign(form, data);
+    console.log("请求获取data", data);
+    message("获取病理报告成功", { type: "success" });
+  } catch (error) {
+    message(`获取病理报告失败: ${error.message || "未知错误"}`, {
+      type: "warning"
+    });
+  }
+};
 onMounted(() => {
-  const id = route.query.id;
-  if (id) {
-    console.log("id", id);
+  // const id = route.query.id;
+  // if (id) {
+  //   console.log("id", id);
+  // }
+  const patient = selectedPatient.value;
+  if (patient) {
+    patientId.value = patient._id;
+    getPathology();
+    // addPathology();
+  } else {
+    message("请先选择病人", { type: "warning" });
   }
 });
 </script>

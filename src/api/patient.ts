@@ -40,3 +40,17 @@ export const getFirstCourceApi = (patientId: any) => {
     baseUrlApi(`/record/${patientId}/fistCource`)
   );
 };
+// 请求添加病理报告
+export const addPathologyApi = (patientId: any, data: any) => {
+  return http.request<any>(
+    "post",
+    baseUrlApi(`/record/${patientId}/pathology`),
+    {
+      data
+    }
+  );
+};
+// 请求获取病理报告
+export const getPathologyApi = (patientId: any) => {
+  return http.request<any>("get", baseUrlApi(`/record/${patientId}/pathology`));
+};
