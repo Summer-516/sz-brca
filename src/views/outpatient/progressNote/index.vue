@@ -18,11 +18,15 @@
   </div>
 </template>
 <script setup lang="ts">
-import { ref } from "vue";
-const dialogVisible = ref(true);
-import { ElMessageBox } from "element-plus";
+import { ref, computed } from "vue";
+import { message } from "@/utils/message";
+// import { ElMessageBox } from "element-plus";
 import { useRouter } from "vue-router";
+import { useOutpatientStore } from "@/store/modules/outpatient";
+const outpatientStore = useOutpatientStore();
 const router = useRouter();
+const selectedPatient = computed(() => outpatientStore.getSelectedPatient);
+const dialogVisible = ref(true);
 const tableData = [
   { type: "首次病程记录" },
   { type: "首次病程记录（中西医科）" },
@@ -39,25 +43,36 @@ const tableData = [
 ];
 // 双击表格某行
 const chooseType = row => {
-  console.log("双击的row", row);
-  if (row.type === "首次病程记录") {
+  if (!selectedPatient.value) {
+    message("请先选择病人", { type: "warning" });
     router.push({
-      path: "/outpatient/progressNote/firstCourse"
+      path: "/outpatient/patientList"
     });
+  } else {
+    if (row.type === "首次病程记录") {
+      router.push({
+        path: "/outpatient/progressNote/firstCourse"
+      });
+    }
   }
 };
 // 关闭dialog
-const handleClose = (done: () => void) => {
-  ElMessageBox.confirm("确定关闭吗？")
-    .then(() => {
-      done();
-      router.push({
-        path: "/outpatient/patientList"
-      });
-    })
-    .catch(() => {
-      // catch error
-    });
+// const handleClose = (done: () => void) => {
+//   ElMessageBox.confirm("确定关闭吗？")
+//     .then(() => {
+//       done();
+//       router.push({
+//         path: "/outpatient/patientList"
+//       });
+//     })
+//     .catch(() => {
+//       // catch error
+//     });
+// };
+const handleClose = () => {
+  router.push({
+    path: "/outpatient/patientList"
+  });
 };
 </script>
 <style lang="scss" scoped></style>

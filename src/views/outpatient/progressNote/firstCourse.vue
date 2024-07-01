@@ -179,13 +179,13 @@
 </template>
 <script setup lang="ts">
 import { ref, computed, onMounted } from "vue";
-import { useRoute } from "vue-router";
+// import { useRoute } from "vue-router";
 import { message } from "@/utils/message";
 import { addFirstCourceApi, getFirstCourceApi } from "@/api/patient";
 import { useOutpatientStore } from "@/store/modules/outpatient";
 const outpatientStore = useOutpatientStore();
-
-const route = useRoute();
+const selectedPatient = computed(() => outpatientStore.getSelectedPatient);
+// const route = useRoute();
 const patientId = ref(null);
 const progressForm = ref({
   登记号: "0022144215",
@@ -245,13 +245,31 @@ const addFirstCource = async () => {
   }
 };
 // 请求获取病程记录
+// const getFirstCource = async () => {
+// try {
+//   const response = await getFirstCourceApi(patientId.value);
+//   const data = response.data.records[0]?.firstCourse;
+//   if (!data) {
+//     throw new Error("未找到病程记录");
+//   }
+//   const { 诊断依据及鉴别诊断, time, admissionTime, ...rest } = data;
+//   Object.assign(progressForm.value, {
+//     ...rest,
+//     time: new Date(time),
+//     admissionTime: new Date(admissionTime),
+//     ...processDiagnosisInfo(诊断依据及鉴别诊断)
+//   });
+//   message("获取病程记录成功", { type: "success" });
+// } catch (error) {
+//   message(`获取病程记录失败: ${error.message || "未知错误"}`, {
+//     type: "warning"
+//   });
+// }
+// };
 const getFirstCource = async () => {
   try {
     const response = await getFirstCourceApi(patientId.value);
     const data = response.data.records[0]?.firstCourse;
-    if (!data) {
-      throw new Error("未找到病程记录");
-    }
     const { 诊断依据及鉴别诊断, time, admissionTime, ...rest } = data;
     Object.assign(progressForm.value, {
       ...rest,
@@ -266,14 +284,19 @@ const getFirstCource = async () => {
     });
   }
 };
-const selectedPatient = computed(() => outpatientStore.getSelectedPatient);
+
 onMounted(() => {
-  const id = route.query.id;
-  if (id) {
-    patientId.value = id;
+  // const id = route.query.id;
+  // if (id) {
+  //   patientId.value = id;
+  //   getFirstCource();
+  // }
+  console.log("selectedPatient", selectedPatient.value);
+  const patient = selectedPatient.value;
+  patientId.value = patient._id;
+  if (patient.hasCourse === true) {
     getFirstCource();
   }
-  console.log("selectedPatient", selectedPatient.value);
 });
 </script>
 <style lang="scss" scoped></style>
