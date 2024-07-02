@@ -63,6 +63,7 @@ onMounted(() => {
 }
 
 .main-content {
-  margin: 2px 0 0 !important;
+  // margin: 2px 0 0 !important;
+  margin: 50px !important;
 }
 </style>

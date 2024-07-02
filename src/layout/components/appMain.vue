@@ -3,6 +3,9 @@ import { useGlobal } from "@pureadmin/utils";
 import backTop from "@/assets/svg/back_top.svg?component";
 import { h, computed, Transition, defineComponent } from "vue";
 import { usePermissionStoreHook } from "@/store/modules/permission";
+import { useOutpatientStore } from "@/store/modules/outpatient";
+const outpatientStore = useOutpatientStore();
+const selectedPatient = computed(() => outpatientStore.getSelectedPatient);
 
 const props = defineProps({
   fixedHeader: Boolean
@@ -34,7 +37,9 @@ const getSectionStyle = computed(() => {
     !hideTabs.value && layout ? "padding-top: 85px;" : "",
     hideTabs.value && !layout.value ? "padding-top: 48px" : "",
     !hideTabs.value && !layout.value ? "padding-top: 85px;" : "",
-    props.fixedHeader ? "" : "padding-top: 0;"
+    props.fixedHeader ? "" : "padding-top: 0;",
+    // 新添加的条件
+    selectedPatient.value ? "padding-top: 125px;" : ""
   ];
 });
 
