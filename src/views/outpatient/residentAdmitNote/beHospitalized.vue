@@ -95,7 +95,7 @@
             <el-form-item label="主诉：">
               <el-input
                 v-model="caseForm.mainSuit"
-                style="width: 240px"
+                style="width: 1200px"
                 autosize
                 type="textarea"
               />
@@ -107,7 +107,7 @@
             <el-form-item label="现病史：">
               <el-input
                 v-model="caseForm.hpi"
-                style="width: 240px"
+                style="width: 1200px"
                 autosize
                 type="textarea"
               />
@@ -2466,6 +2466,8 @@
                 type="datetime"
                 placeholder="辅助检查时间"
               />
+            </el-form-item>
+            <el-form-item>
               <el-input
                 v-model="auxiliaryForm.place"
                 placeholder="辅助检查地点"
@@ -2494,7 +2496,8 @@
               <el-input
                 v-model="auxiliaryForm.tentativeDiagnosis"
                 placeholder="初步诊断"
-                style="width: 150px"
+                style="width: 1200px"
+                type="textarea"
               />
             </el-form-item>
           </el-row>

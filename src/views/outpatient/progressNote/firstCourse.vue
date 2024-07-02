@@ -168,6 +168,11 @@
                 <el-option label="上级医生2" value="上级医生2" />
               </el-select>
             </el-form-item>
+          </el-col>
+        </el-row>
+        <el-divider />
+        <el-row>
+          <el-col :offset="22" :span="2">
             <el-form-item>
               <el-button type="primary" @click="addFirstCource">提交</el-button>
             </el-form-item>

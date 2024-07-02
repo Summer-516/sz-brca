@@ -212,7 +212,7 @@
         <el-divider />
 
         <el-row>
-          <el-col :offset="22" :spa="2">
+          <el-col :offset="22" :span="2">
             <el-form-item>
               <el-button type="primary" @click="addPathology">提交</el-button>
             </el-form-item>

@@ -90,8 +90,9 @@
         <el-table-column prop="aa" label="主任医师" />
         <el-table-column prop="aa" label="医生便签" />
         <el-table-column prop="aa" label="病案号" />
-        <el-table-column fixed="right" label="操作" width="200">
-          <template #default="{ row }">
+        <el-table-column fixed="right" label="操作" width="100">
+          <!-- <template #default="{ row }"> -->
+          <template #default>
             <!-- <el-button
               link
               type="primary"
@@ -100,14 +101,14 @@
             >
               添加病程记录
             </el-button> -->
-            <el-button
+            <!-- <el-button
               link
               type="primary"
               size="small"
               @click="handleReportBtn(row)"
             >
               添加病理报告
-            </el-button>
+            </el-button> -->
             <el-button link type="danger" size="small" @click="handleClick">
               删除
             </el-button>
@@ -164,7 +165,7 @@
 </template>
 <script setup lang="ts">
 import { ref, reactive, onMounted } from "vue";
-import { useRouter } from "vue-router";
+// import { useRouter } from "vue-router";
 import { Search, Plus } from "@element-plus/icons-vue";
 import {
   addPatientApi,
@@ -173,7 +174,7 @@ import {
 } from "@/api/patient";
 import { message } from "@/utils/message";
 import { useOutpatientStore } from "@/store/modules/outpatient";
-const router = useRouter();
+// const router = useRouter();
 const outpatientStore = useOutpatientStore();
 const showAddDialog = ref(false);
 const page = ref(1);
@@ -213,12 +214,12 @@ const handleCurrentChange = (val: number) => {
 // };
 
 // 点击添加病理报告按钮
-const handleReportBtn = row => {
-  router.push({
-    path: "/outpatient/pathologicalReport",
-    query: { id: row._id }
-  });
-};
+// const handleReportBtn = row => {
+//   router.push({
+//     path: "/outpatient/pathologicalReport",
+//     query: { id: row._id }
+//   });
+// };
 const handleClick = () => {
   console.log("click");
 };
