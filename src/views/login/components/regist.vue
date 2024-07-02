@@ -11,13 +11,20 @@ import { getRegister } from "@/api/user";
 import Lock from "@iconify-icons/ri/lock-fill";
 import Iphone from "@iconify-icons/ep/iphone";
 import User from "@iconify-icons/ri/user-3-fill";
+import Name from "@iconify-icons/ri/contacts-fill";
+
 const loading = ref(false);
 const ruleForm = reactive({
-  email: "test@test.com",
-  username: "test",
-  phone: "18271953886",
-  password: "12345",
-  repeatPassword: "12345"
+  // email: "test@test.com",
+  // username: "test",
+  // phone: "18271953886",
+  // password: "12345",
+  // repeatPassword: "12345"
+  name: "",
+  account: "",
+  phone: "",
+  password: "",
+  repeatPassword: ""
 });
 const ruleFormRef = ref<FormInstance>();
 // const { isDisabled, text } = useVerifyCode();
@@ -36,42 +43,70 @@ const repeatPasswordRule = [
   }
 ];
 
+// const onUpdate = async (formEl: FormInstance | undefined) => {
+//   loading.value = true;
+//   if (!formEl) return;
+//   await formEl.validate((valid, fields) => {
+//     if (valid) {
+//       getRegister(ruleForm)
+//         .then(res => {
+//           if (res.code === 201) {
+//             message("注册成功", { type: "success" });
+//             onBack();
+//           }
+//         })
+//         .catch(err => {
+//           const res = err.response.data.data;
+//           message(res.email || res.phone || "注册失败，请稍后再试", {
+//             type: "warning"
+//           });
+//         })
+//         .finally(() => {
+//           loading.value = false;
+//         });
+//       // if (checked.value) {
+//       //   // 模拟请求，需根据实际开发进行修改
+//       //   setTimeout(() => {
+//       //     message("注册成功", { type: "success" });
+//       //     loading.value = false;
+//       //   }, 2000);
+//       // } else {
+//       //   loading.value = false;
+//       //   message("请勾选隐私政策", { type: "warning" });
+//       // }
+//     } else {
+//       loading.value = false;
+//       return fields;
+//     }
+//   });
+// };
 const onUpdate = async (formEl: FormInstance | undefined) => {
   loading.value = true;
   if (!formEl) return;
-  await formEl.validate((valid, fields) => {
+
+  try {
+    const valid = await formEl.validate();
     if (valid) {
-      getRegister(ruleForm)
-        .then(res => {
-          if (res.code === 201) {
-            message("注册成功", { type: "success" });
-            onBack();
-          }
-        })
-        .catch(err => {
-          const res = err.response.data.data;
-          message(res.email || res.phone || "注册失败，请稍后再试", {
-            type: "warning"
-          });
-        })
-        .finally(() => {
-          loading.value = false;
+      try {
+        const res = await getRegister(ruleForm);
+        console.log("注册成功的res", res);
+        if (res.code === 1) {
+          message("注册成功", { type: "success" });
+          onBack();
+        }
+      } catch (err) {
+        const res = err.response.data.data;
+        message(res.email || res.phone || "注册失败，请稍后再试", {
+          type: "warning"
         });
-      // if (checked.value) {
-      //   // 模拟请求，需根据实际开发进行修改
-      //   setTimeout(() => {
-      //     message("注册成功", { type: "success" });
-      //     loading.value = false;
-      //   }, 2000);
-      // } else {
-      //   loading.value = false;
-      //   message("请勾选隐私政策", { type: "warning" });
-      // }
-    } else {
-      loading.value = false;
-      return fields;
+      }
     }
-  });
+  } catch (fields) {
+    // 如果需要，在这里处理验证错误
+    console.error("验证失败:", fields);
+  } finally {
+    loading.value = false;
+  }
 };
 
 function onBack() {
@@ -87,43 +122,44 @@ function onBack() {
     :rules="updateRules"
     size="large"
   >
-    <el-form-item
-      :rules="[
-        {
-          required: true,
-          message: '请输入用户名',
-          trigger: 'blur'
-        }
-      ]"
-      prop="username"
-    >
-      <el-input
-        clearable
-        v-model="ruleForm.username"
-        placeholder="用户名"
-        :prefix-icon="useRenderIcon(User)"
-      />
-    </el-form-item>
     <Motion>
       <el-form-item
         :rules="[
           {
             required: true,
-            message: '请输入email',
+            message: '请输入姓名',
             trigger: 'blur'
           }
         ]"
-        prop="username"
+        prop="name"
       >
         <el-input
           clearable
-          v-model="ruleForm.email"
-          placeholder="email"
+          v-model="ruleForm.name"
+          placeholder="姓名"
+          :prefix-icon="useRenderIcon(Name)"
+        />
+      </el-form-item>
+    </Motion>
+    <Motion>
+      <el-form-item
+        :rules="[
+          {
+            required: true,
+            message: '请输入账号',
+            trigger: 'blur'
+          }
+        ]"
+        prop="account"
+      >
+        <el-input
+          clearable
+          v-model="ruleForm.account"
+          placeholder="账号"
           :prefix-icon="useRenderIcon(User)"
         />
       </el-form-item>
     </Motion>
-
     <Motion :delay="100">
       <el-form-item prop="phone">
         <el-input
@@ -131,6 +167,28 @@ function onBack() {
           v-model="ruleForm.phone"
           placeholder="手机号码"
           :prefix-icon="useRenderIcon(Iphone)"
+        />
+      </el-form-item>
+    </Motion>
+    <Motion :delay="200">
+      <el-form-item prop="password">
+        <el-input
+          clearable
+          show-password
+          v-model="ruleForm.password"
+          placeholder="密码"
+          :prefix-icon="useRenderIcon(Lock)"
+        />
+      </el-form-item>
+    </Motion>
+    <Motion :delay="250">
+      <el-form-item :rules="repeatPasswordRule" prop="repeatPassword">
+        <el-input
+          clearable
+          show-password
+          v-model="ruleForm.repeatPassword"
+          placeholder="确认密码"
+          :prefix-icon="useRenderIcon(Lock)"
         />
       </el-form-item>
     </Motion>
@@ -154,30 +212,6 @@ function onBack() {
         </div>
       </el-form-item>
     </Motion> -->
-
-    <Motion :delay="200">
-      <el-form-item prop="password">
-        <el-input
-          clearable
-          show-password
-          v-model="ruleForm.password"
-          placeholder="密码"
-          :prefix-icon="useRenderIcon(Lock)"
-        />
-      </el-form-item>
-    </Motion>
-
-    <Motion :delay="250">
-      <el-form-item :rules="repeatPasswordRule" prop="repeatPassword">
-        <el-input
-          clearable
-          show-password
-          v-model="ruleForm.repeatPassword"
-          placeholder="确认密码"
-          :prefix-icon="useRenderIcon(Lock)"
-        />
-      </el-form-item>
-    </Motion>
 
     <!-- <Motion :delay="300">
       <el-form-item>
