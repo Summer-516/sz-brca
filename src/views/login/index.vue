@@ -52,84 +52,90 @@ const ruleForm = reactive({
   password: "xiaodong123"
 });
 
+// const onLogin = async (formEl: FormInstance | undefined) => {
+//   loading.value = true;
+//   if (!formEl) return;
+//   await formEl.validate((valid, fields) => {
+//     if (valid) {
+//       getLogin(ruleForm)
+//         .then(res => {
+//           if (res.code === 1) {
+//             const { accessToken, userId, roles, name } = res.data;
+//             setToken({
+//               accessToken: accessToken,
+//               userId: userId,
+//               roles: roles,
+//               username: name
+//             } as any);
+//             usePermissionStoreHook().handleWholeMenus([]);
+//             addPathMatch();
+//             router.push("/");
+//             message("登录成功", { type: "success" });
+//           } else {
+//             message(res.message || "登录失败,请联系管理员", {
+//               type: "warning"
+//             });
+//             loading.value = false;
+//             return fields;
+//           }
+//         })
+//         .catch(err => {
+//           console.log("err", err);
+//           message(
+//             err.message ||
+//               err.response?.data.message ||
+//               "登录失败,请联系管理员",
+//             { type: "warning" }
+//           );
+//           loading.value = false;
+//           return fields;
+//         });
+//     } else {
+//       loading.value = false;
+//       return fields;
+//     }
+//   });
+// };
 const onLogin = async (formEl: FormInstance | undefined) => {
   loading.value = true;
   if (!formEl) return;
-  await formEl.validate((valid, fields) => {
-    if (valid) {
-      // getLogin(ruleForm)
-      //   .then(res => {
-      //     if (res.code === 200) {
-      //       const { email, token, username = "user" } = res.data;
-      //       console.log("setToken", username || email, token);
-      //       setToken({
-      //         username: username || email,
-      //         roles: [],
-      //         accessToken: token
-      //       } as any);
-      //       usePermissionStoreHook().handleWholeMenus([]);
-      //       addPathMatch();
-      //       router.push("/");
-      //       message("登录成功", { type: "success" });
-      //     } else {
-      //       message(res.message || "登录失败,请联系管理员", {
-      //         type: "warning"
-      //       });
-      //       loading.value = false;
-      //       return fields;
-      //     }
-      //   })
-      //   .catch(err => {
-      //     console.log("err", err);
-      //     message(
-      //       err.message ||
-      //         err.response?.data.message ||
-      //         "登录失败,请联系管理员",
-      //       { type: "warning" }
-      //     );
-      //     loading.value = false;
-      //     return fields;
-      //   });
-      getLogin(ruleForm)
-        .then(res => {
-          if (res.code === 1) {
-            const { accessToken, userId, roles, name } = res.data;
-            setToken({
-              accessToken: accessToken,
-              userId: userId,
-              roles: roles,
-              username: name
-            } as any);
-            usePermissionStoreHook().handleWholeMenus([]);
-            addPathMatch();
-            router.push("/");
-            message("登录成功", { type: "success" });
-          } else {
-            message(res.message || "登录失败,请联系管理员", {
-              type: "warning"
-            });
-            loading.value = false;
-            return fields;
-          }
-        })
-        .catch(err => {
-          console.log("err", err);
-          message(
-            err.message ||
-              err.response?.data.message ||
-              "登录失败,请联系管理员",
-            { type: "warning" }
-          );
-          loading.value = false;
-          return fields;
-        });
-    } else {
-      loading.value = false;
-      return fields;
-    }
-  });
-};
 
+  try {
+    const valid = await formEl.validate();
+    if (valid) {
+      try {
+        const res = await getLogin(ruleForm);
+        if (res.code === 1) {
+          const { accessToken, userId, roles, name } = res.data;
+          setToken({
+            accessToken: accessToken,
+            userId: userId,
+            roles: roles,
+            username: name
+          } as any);
+          usePermissionStoreHook().handleWholeMenus([]);
+          addPathMatch();
+          router.push("/");
+          message("登录成功", { type: "success" });
+        } else {
+          message(res.message || "登录失败,请联系管理员", {
+            type: "warning"
+          });
+        }
+      } catch (err) {
+        console.log("err", err);
+        message(
+          err.message || err.response?.data.message || "登录失败,请联系管理员",
+          { type: "warning" }
+        );
+      }
+    }
+  } catch (fields) {
+    console.log("验证失败:", fields);
+  } finally {
+    loading.value = false;
+  }
+};
 /** 使用公共函数，避免`removeEventListener`失效 */
 function onkeypress({ code }: KeyboardEvent) {
   if (code === "Enter") {
