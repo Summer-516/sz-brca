@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <div onmousedown="return false">
     <el-dialog
       v-model="dialogVisible"
       title="模版选择"

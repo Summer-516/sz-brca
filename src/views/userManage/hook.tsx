@@ -1,12 +1,12 @@
 import dayjs from "dayjs";
 import { message } from "@/utils/message";
 import {
-  getUserList,
-  changeState,
+  getUserListApi,
+  // changeState,
   deleteUser,
   getUserDetail
 } from "@/api/user";
-import { ElMessageBox } from "element-plus";
+// import { ElMessageBox } from "element-plus";
 import { type PaginationProps } from "@pureadmin/table";
 import { reactive, ref, computed } from "vue";
 
@@ -23,7 +23,7 @@ export function useUser() {
   const dataList = ref([]);
   const detailsForm = ref({});
   const loading = ref(true);
-  const switchLoadMap = ref({});
+  // const switchLoadMap = ref({});
   const pagination = reactive<PaginationProps>({
     total: 0,
     pageSize: 10,
@@ -91,7 +91,7 @@ export function useUser() {
     {
       label: "状态",
       prop: "state",
-      minWidth: 90,
+      minWidth: 90
     },
     {
       label: "创建时间",
@@ -117,57 +117,57 @@ export function useUser() {
     ];
   });
 
-  function onChange({ row, index }) {
-    ElMessageBox.confirm(
-      `确认要<strong>${
-        row.state === 0 ? "停用" : "启用"
-      }</strong><strong style='color:var(--el-color-primary)'>${
-        row.name
-      }</strong>用户吗?`,
-      "系统提示",
-      {
-        confirmButtonText: "确定",
-        cancelButtonText: "取消",
-        type: "warning",
-        dangerouslyUseHTMLString: true,
-        draggable: true
-      }
-    )
-      .then(() => {
-        switchLoadMap.value[index] = Object.assign(
-          {},
-          switchLoadMap.value[index],
-          {
-            loading: true
-          }
-        );
+  // function onChange({ row, index }) {
+  //   ElMessageBox.confirm(
+  //     `确认要<strong>${
+  //       row.state === 0 ? "停用" : "启用"
+  //     }</strong><strong style='color:var(--el-color-primary)'>${
+  //       row.name
+  //     }</strong>用户吗?`,
+  //     "系统提示",
+  //     {
+  //       confirmButtonText: "确定",
+  //       cancelButtonText: "取消",
+  //       type: "warning",
+  //       dangerouslyUseHTMLString: true,
+  //       draggable: true
+  //     }
+  //   )
+  //     .then(() => {
+  //       switchLoadMap.value[index] = Object.assign(
+  //         {},
+  //         switchLoadMap.value[index],
+  //         {
+  //           loading: true
+  //         }
+  //       );
 
-        changeState(row._id, { state: row.state }).then(res => {
-          if (res.code === 200) {
-            message("已成功修改用户状态", {
-              type: "success"
-            });
-          } else {
-            message(res.message || "修改失败", {
-              type: "warning"
-            });
-          }
-        });
-      })
-      .catch(() => {
-        row.state === 0 ? (row.state = 1) : (row.state = 0);
-      })
-      .finally(() => {
-        switchLoadMap.value[index] = Object.assign(
-          {},
-          switchLoadMap.value[index],
-          {
-            loading: false
-          }
-        );
-        onSearch();
-      });
-  }
+  //       changeState(row._id, { state: row.state }).then(res => {
+  //         if (res.code === 200) {
+  //           message("已成功修改用户状态", {
+  //             type: "success"
+  //           });
+  //         } else {
+  //           message(res.message || "修改失败", {
+  //             type: "warning"
+  //           });
+  //         }
+  //       });
+  //     })
+  //     .catch(() => {
+  //       row.state === 0 ? (row.state = 1) : (row.state = 0);
+  //     })
+  //     .finally(() => {
+  //       switchLoadMap.value[index] = Object.assign(
+  //         {},
+  //         switchLoadMap.value[index],
+  //         {
+  //           loading: false
+  //         }
+  //       );
+  //       onSearch();
+  //     });
+  // }
 
   function handleUpdate(row) {
     isDetail.value = true;
@@ -245,7 +245,7 @@ export function useUser() {
       page: pagination.currentPage,
       pageSize: pagination.pageSize
     };
-    const { data } = await getUserList(params);
+    const { data } = await getUserListApi(params);
     dataList.value = data.list;
     pagination.total = data.total;
 

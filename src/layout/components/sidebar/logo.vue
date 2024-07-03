@@ -19,7 +19,9 @@ const { title, abbreviation } = useNav();
         to="/"
       >
         <!-- <img src="/logo.svg" alt="logo" /> -->
-        <img src="/favicon.png" alt="logo" />
+        <!-- <img src="/favicon.png" alt="logo" /> -->
+        <img src="/logo.png" alt="logo" />
+
         <span class="sidebar-title">{{ abbreviation }}</span>
       </router-link>
       <router-link
@@ -30,7 +32,8 @@ const { title, abbreviation } = useNav();
         to="/"
       >
         <!-- <img src="/logo.svg" alt="logo" /> -->
-        <img src="/favicon.png" alt="logo" />
+        <!-- <img src="/favicon.png" alt="logo" /> -->
+        <img src="/logo.png" alt="logo" />
         <span class="sidebar-title">{{ abbreviation }}</span>
       </router-link>
     </transition>

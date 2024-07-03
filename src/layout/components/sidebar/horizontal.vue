@@ -41,7 +41,8 @@ watch(
   >
     <div class="horizontal-header-left" @click="backHome">
       <!-- <img src="/logo.svg" alt="logo" /> -->
-      <img src="/favicon.png" alt="logo" />
+      <!-- <img src="/favicon.png" alt="logo" /> -->
+      <img src="/logo.png" alt="logo" />
       <span>{{ title }}</span>
     </div>
     <el-menu
