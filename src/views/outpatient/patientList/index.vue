@@ -267,7 +267,7 @@ onMounted(() => {
   display: flex;
   flex-wrap: wrap;
   justify-content: flex-end;
-  width: 80%;
+  width: 100%;
   margin: 16px 0;
 }
 </style>
