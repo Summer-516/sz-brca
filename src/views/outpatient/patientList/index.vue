@@ -20,8 +20,8 @@
                   <el-input v-model="form.bedNum" />
                 </el-form-item>
               </el-col>
-              <el-col :span="6" style="width: 80%">
-                <el-button type="primary" :icon="Search">查询</el-button>
+              <el-col :span="6">
+                <el-button :icon="Refresh">重置</el-button>
               </el-col>
             </el-row>
             <el-row :gutter="20">
@@ -49,14 +49,28 @@
                 </el-form-item>
               </el-col>
               <el-col :span="6">
-                <el-button type="primary" :icon="Plus" @click="handleAddBtn">
-                  新增患者
-                </el-button>
+                <el-button type="primary" :icon="Search">查询</el-button>
               </el-col>
             </el-row>
           </el-form>
         </div>
       </template>
+      <!-- <el-row :gutter="20" style="margin-bottom: 20px">
+        <el-col :span="6">
+          <span>病人列表</span>
+        </el-col>
+        <el-col :span="2" :offset="16">
+          <el-button type="primary" :icon="CirclePlus" @click="handleAddBtn">
+            新增患者
+          </el-button>
+        </el-col>
+      </el-row> -->
+      <div class="table-title">
+        <span>病人列表</span>
+        <el-button type="primary" :icon="CirclePlus" @click="handleAddBtn">
+          新增患者
+        </el-button>
+      </div>
       <el-table
         :data="tableData"
         stripe
@@ -84,7 +98,7 @@
         <el-table-column prop="aa" label="主任医师" />
         <el-table-column prop="aa" label="医生便签" />
         <el-table-column prop="aa" label="病案号" />
-        <el-table-column fixed="right" label="操作" width="100">
+        <el-table-column fixed="right" label="操作" width="100px">
           <!-- <template #default="{ row }"> -->
           <template #default>
             <!-- <el-button
@@ -103,10 +117,10 @@
             >
               添加病理报告
             </el-button> -->
+            <el-button link type="primary" size="small">编辑</el-button>
             <el-button link type="danger" size="small" @click="handleClick">
               删除
             </el-button>
-            <el-button link type="primary" size="small">编辑</el-button>
           </template>
         </el-table-column>
       </el-table>
@@ -160,7 +174,7 @@
 <script setup lang="ts">
 import { ref, reactive, onMounted } from "vue";
 // import { useRouter } from "vue-router";
-import { Search, Plus } from "@element-plus/icons-vue";
+import { Search, CirclePlus, Refresh } from "@element-plus/icons-vue";
 import {
   addPatientApi,
   registrationApi,
@@ -269,5 +283,11 @@ onMounted(() => {
   justify-content: flex-end;
   width: 100%;
   margin: 16px 0;
+}
+
+.table-title {
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 15px;
 }
 </style>
