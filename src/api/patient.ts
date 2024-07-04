@@ -1,7 +1,7 @@
 import { http } from "@/utils/http";
 import { baseUrlApi } from "./utils";
 
-// 请求添加病人
+// 请求添加患者
 export const addPatientApi = (data: any) => {
   return http.request<any>("post", baseUrlApi(`/patient`), {
     data

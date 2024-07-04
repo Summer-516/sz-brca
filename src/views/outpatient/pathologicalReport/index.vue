@@ -665,7 +665,7 @@ onMounted(() => {
     getPathology();
     // addPathology();
   } else {
-    message("请先选择病人", { type: "warning" });
+    message("请先选择患者", { type: "warning" });
   }
 });
 </script>

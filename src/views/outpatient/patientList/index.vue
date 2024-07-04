@@ -55,18 +55,8 @@
           </el-form>
         </div>
       </template>
-      <!-- <el-row :gutter="20" style="margin-bottom: 20px">
-        <el-col :span="6">
-          <span>病人列表</span>
-        </el-col>
-        <el-col :span="2" :offset="16">
-          <el-button type="primary" :icon="CirclePlus" @click="handleAddBtn">
-            新增患者
-          </el-button>
-        </el-col>
-      </el-row> -->
       <div class="table-title">
-        <span>病人列表</span>
+        <span>患者列表</span>
         <el-button type="primary" :icon="CirclePlus" @click="handleAddBtn">
           新增患者
         </el-button>

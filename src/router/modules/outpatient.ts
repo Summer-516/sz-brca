@@ -13,7 +13,7 @@ export default {
       name: "PatientList",
       component: () => import("@/views/outpatient/patientList/index.vue"),
       meta: {
-        title: "病人列表"
+        title: "患者列表"
       }
     },
     {

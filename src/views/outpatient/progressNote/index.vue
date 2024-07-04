@@ -44,7 +44,7 @@ const tableData = [
 // 双击表格某行
 const chooseType = row => {
   if (!selectedPatient.value) {
-    message("请先选择病人", { type: "warning" });
+    message("请先选择患者", { type: "warning" });
     router.push({
       path: "/outpatient/patientList"
     });
