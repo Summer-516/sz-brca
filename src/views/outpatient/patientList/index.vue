@@ -4,33 +4,30 @@
       <template #header>
         <div class="card-header">
           <el-form :model="form" label-width="auto" :inline="true">
-            <el-row>
+            <el-row :gutter="20">
               <el-col :span="6">
-                <el-form-item label="病案号">
-                  <el-input
-                    v-model="form.identificationNum"
-                    style="width: 240px"
-                  />
+                <el-form-item label="病案号" style="width: 80%">
+                  <el-input v-model="form.identificationNum" />
                 </el-form-item>
               </el-col>
               <el-col :span="6">
-                <el-form-item label="患者姓名">
-                  <el-input v-model="form.name" style="width: 240px" />
+                <el-form-item label="患者姓名" style="width: 80%">
+                  <el-input v-model="form.name" />
                 </el-form-item>
               </el-col>
               <el-col :span="6">
-                <el-form-item label="床号">
-                  <el-input v-model="form.bedNum" style="width: 240px" />
+                <el-form-item label="床号" style="width: 80%">
+                  <el-input v-model="form.bedNum" />
                 </el-form-item>
               </el-col>
-              <el-col :span="6">
+              <el-col :span="6" style="width: 80%">
                 <el-button type="primary" :icon="Search">查询</el-button>
               </el-col>
             </el-row>
-            <el-row>
+            <el-row :gutter="20">
               <el-col :span="6">
-                <el-form-item label="病区">
-                  <el-select v-model="form.ward" style="width: 240px">
+                <el-form-item label="病区" style="width: 80%">
+                  <el-select v-model="form.ward">
                     <el-option label="aaa" value="aaa" />
                     <el-option label="bbb" value="bbb" />
                     <el-option label="ccc" value="ccc" />
@@ -38,11 +35,8 @@
                 </el-form-item>
               </el-col>
               <el-col :span="6">
-                <el-form-item label="主管医师">
-                  <el-select
-                    v-model="form.competentPhysician"
-                    style="width: 240px"
-                  >
+                <el-form-item label="主管医师" style="width: 80%">
+                  <el-select v-model="form.competentPhysician">
                     <el-option label="全部医师" value="aaa" />
                     <el-option label="bbb" value="bbb" />
                     <el-option label="ccc" value="ccc" />
@@ -50,8 +44,8 @@
                 </el-form-item>
               </el-col>
               <el-col :span="6">
-                <el-form-item label="登记号">
-                  <el-input v-model="form.bedNum" style="width: 240px" />
+                <el-form-item label="登记号" style="width: 80%">
+                  <el-input v-model="form.bedNum" />
                 </el-form-item>
               </el-col>
               <el-col :span="6">
@@ -66,7 +60,7 @@
       <el-table
         :data="tableData"
         stripe
-        style="width: 100%"
+        style="width: 80%"
         @row-dblclick="row => choosePatient(row)"
       >
         <el-table-column prop="aa" label="序号" />
@@ -273,7 +267,7 @@ onMounted(() => {
   display: flex;
   flex-wrap: wrap;
   justify-content: flex-end;
-  width: 100%;
+  width: 80%;
   margin: 16px 0;
 }
 </style>
