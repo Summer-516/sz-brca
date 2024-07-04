@@ -60,7 +60,7 @@
       <el-table
         :data="tableData"
         stripe
-        style="width: 80%"
+        style="width: 100%"
         @row-dblclick="row => choosePatient(row)"
       >
         <el-table-column prop="aa" label="序号" />
