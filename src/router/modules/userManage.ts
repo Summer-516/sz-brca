@@ -5,7 +5,8 @@ export default {
   meta: {
     title: "用户管理",
     rank: 1,
-    icon: "userFilled"
+    icon: "userFilled",
+    showLink: false
   },
   children: [
     {
