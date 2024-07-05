@@ -4,26 +4,33 @@
       <template #header>
         <div class="card-header">
           <el-form :model="form" label-width="auto" :inline="true">
-            <el-form-item label="姓名">
-              <el-input v-model="form.name" style="width: 240px" />
-            </el-form-item>
-            <el-form-item label="账号">
-              <el-input v-model="form.account" style="width: 240px" />
-            </el-form-item>
-            <el-form-item>
-              <el-button type="primary" :icon="Search">搜索</el-button>
-            </el-form-item>
-            <el-form-item>
-              <el-button :icon="Refresh">重置</el-button>
-            </el-form-item>
-            <el-form-item>
-              <el-button type="primary" :icon="CirclePlus" @click="handleAddBtn"
-                >新增</el-button
-              >
-            </el-form-item>
+            <el-row :gutter="20">
+              <el-col :span="6">
+                <el-form-item label="姓名">
+                  <el-input v-model="form.name" />
+                </el-form-item>
+              </el-col>
+              <el-col :span="6">
+                <el-form-item label="账号">
+                  <el-input v-model="form.account" />
+                </el-form-item>
+              </el-col>
+              <el-col :span="2">
+                <el-button type="primary" :icon="Search">搜索</el-button>
+              </el-col>
+              <el-col :span="2">
+                <el-button :icon="Refresh">重置</el-button>
+              </el-col>
+            </el-row>
           </el-form>
         </div>
       </template>
+      <div class="table-title">
+        <span>医生列表</span>
+        <el-button type="primary" :icon="CirclePlus" @click="handleAddBtn">
+          新增医生
+        </el-button>
+      </div>
       <el-table :data="tableData" stripe style="width: 100%">
         <el-table-column fixed prop="name" label="姓名" />
         <el-table-column prop="phone" label="手机号" />
@@ -32,10 +39,10 @@
         <el-table-column prop="date" label="创建时间" />
         <el-table-column fixed="right" label="操作" width="120">
           <template #default>
+            <el-button link type="primary" size="small">编辑</el-button>
             <el-button link type="danger" size="small" @click="handleClick">
               删除
             </el-button>
-            <el-button link type="primary" size="small">编辑</el-button>
           </template>
         </el-table-column>
       </el-table>
@@ -175,5 +182,11 @@ onMounted(() => {
   justify-content: flex-end;
   width: 100%;
   margin: 16px 0;
+}
+
+.table-title {
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 15px;
 }
 </style>
