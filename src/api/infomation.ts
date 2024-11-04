@@ -10,5 +10,5 @@ export const addRecordCourseApi = (data: any) => {
 
 // 请求获取患者列表
 export const getRecordListApi = () => {
-  return http.request<any>("get", baseUrlApi(`/patient/list`));
+  return http.request<any>("get", baseUrlApi(`/record/list`));
 };

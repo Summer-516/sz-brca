@@ -42,9 +42,12 @@
         style="width: 100%"
         @row-dblclick="row => choosePatient(row)"
       >
-        <el-table-column prop="registerNum" label="登记号" />
-        <el-table-column prop="sex" label="性别" />
-        <el-table-column prop="age" label="年龄" />
+        <el-table-column prop="登记号" label="登记号" />
+        <el-table-column prop="性别" label="性别" />
+        <el-table-column prop="年龄" label="年龄" />
+        <el-table-column prop="月经状态" label="月经状态" />
+        <el-table-column prop="乳腺癌家族史" label="乳腺癌家族史" />
+        <el-table-column prop="长期雌激素使用史" label="长期雌激素使用史" />
         <el-table-column fixed="right" label="操作" width="150px">
           <template #default="{ row }">
             <el-button
@@ -76,6 +79,12 @@
         @size-change="handleSizeChange"
         @current-change="handleCurrentChange"
       /> -->
+      <el-pagination
+        :page-sizes="[10, 20, 30, 40]"
+        :total="total"
+        layout="total, sizes, prev, pager, next, jumper"
+        class="pagination"
+      />
     </el-card>
   </div>
 </template>
@@ -83,11 +92,7 @@
 import { ref, reactive, onMounted } from "vue";
 // import { useRouter } from "vue-router";
 import { Search, CirclePlus, Refresh } from "@element-plus/icons-vue";
-// import {
-//   addPatientApi,
-//   registrationApi,
-//   getPatientListApi
-// } from "@/api/patient";
+import { getRecordListApi } from "@/api/infomation";
 // import { message } from "@/utils/message";
 import { useOutpatientStore } from "@/store/modules/outpatient";
 import { useRouter } from "vue-router";
@@ -95,7 +100,7 @@ const router = useRouter();
 const outpatientStore = useOutpatientStore();
 // const page = ref(1);
 // const pageSize = ref(10);
-// const total = ref(100);
+const total = ref(100);
 const tableData = ref([]);
 const form = reactive({
   registerNum: "",
@@ -135,21 +140,23 @@ const handleAddBtn = () => {
     path: "/infomation/infoForm"
   });
 };
-// 请求获取患者列表
-// const getPatientList = () => {
-//   getPatientListApi(page.value, pageSize.value)
-//     .then(res => {
-//       tableData.value = res.data.list;
-//       total.value = res.data.total;
-//     })
-//     .catch(message => {
-//       message(message || "获取患者列表失败", {
-//         type: "warning"
-//       });
-//     });
-// };
+// 请求获取病理信息列表
+const getRecordList = () => {
+  getRecordListApi()
+    .then(res => {
+      console.log("res", res);
+      tableData.value = res.data;
+      console.log("tableData.value", tableData.value);
+      // total.value = res.data.total;
+    })
+    .catch(message => {
+      message(message || "获取患者列表失败", {
+        type: "warning"
+      });
+    });
+};
 onMounted(() => {
-  // getPatientList();
+  getRecordList();
 });
 </script>
 <style lang="scss" scoped>
