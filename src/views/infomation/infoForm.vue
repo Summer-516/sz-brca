@@ -62,6 +62,12 @@
             style="width: 240px"
           />
         </el-form-item>
+        <el-form-item label="腋窝淋巴结微转移个数">
+          <el-input
+            v-model="infoForm.腋窝淋巴结微转移个数"
+            style="width: 240px"
+          />
+        </el-form-item>
 
         <el-form-item label="锁骨上下区淋巴结转移情况">
           <el-select
@@ -377,6 +383,7 @@ const infoForm = reactive({
   肿块大小: "",
   簇状钙化灶: "",
   腋窝淋巴结宏转移个数: "",
+  腋窝淋巴结微转移个数: "",
   锁骨上下区淋巴结转移情况: "",
   远处转移情况: "",
   转移部位: "",
@@ -428,6 +435,7 @@ const numberFields = [
   "乳腺手术史",
   "簇状钙化灶",
   "腋窝淋巴结宏转移个数",
+  "腋窝淋巴结微转移个数",
   "锁骨上下区淋巴结转移情况",
   "远处转移情况",
   "组织学类型",
