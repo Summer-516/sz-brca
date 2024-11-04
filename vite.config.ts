@@ -46,8 +46,8 @@ export default ({ command, mode }: ConfigEnv): UserConfigExport => {
       proxy: {
         "^/api/.*": {
           // 这里填写后端地址
-          // target: "http://192.168.1.7:3001",
-          target: "http://asmartivf.cn:3001",
+          target: "http://192.168.1.7:3001",
+          // target: "http://asmartivf.cn:3001",
           changeOrigin: true,
           rewrite: path => path.replace(/^\/api/, "")
         }
