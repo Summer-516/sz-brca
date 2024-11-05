@@ -12,3 +12,8 @@ export const addRecordCourseApi = (data: any) => {
 export const getRecordListApi = () => {
   return http.request<any>("get", baseUrlApi(`/record/list`));
 };
+
+// 请求删除患者列表某条病理记录
+export const deleteRecordApi = id => {
+  return http.request<any>("delete", baseUrlApi(`/record/${id}`));
+};

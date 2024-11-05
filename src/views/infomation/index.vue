@@ -54,17 +54,17 @@
               link
               type="primary"
               size="small"
-              @click="handleDetails(row)"
-            >
-              查看详情
-            </el-button>
-            <el-button
-              link
-              type="primary"
-              size="small"
               @click="handleEdit(row)"
             >
               编辑
+            </el-button>
+            <el-button
+              link
+              type="danger"
+              size="small"
+              @click="handleDelete(row)"
+            >
+              删除
             </el-button>
           </template>
         </el-table-column>
@@ -92,8 +92,8 @@
 import { ref, reactive, onMounted } from "vue";
 // import { useRouter } from "vue-router";
 import { Search, CirclePlus, Refresh } from "@element-plus/icons-vue";
-import { getRecordListApi } from "@/api/infomation";
-// import { message } from "@/utils/message";
+import { getRecordListApi, deleteRecordApi } from "@/api/infomation";
+import { message } from "@/utils/message";
 import { useOutpatientStore } from "@/store/modules/outpatient";
 import { useRouter } from "vue-router";
 const router = useRouter();
@@ -123,13 +123,163 @@ const form = reactive({
 //   page.value = val;
 //   getPatientList();
 // };
-const handleDetails = row => {
-  console.log(row);
+
+// 定义字段的映射关系
+const mappings = {
+  性别: {
+    0: "女",
+    1: "男"
+  },
+  月经状态: {
+    0: "绝经前",
+    1: "绝经后"
+  },
+  乳腺癌家族史: {
+    0: "无",
+    1: "有"
+  },
+  长期雌激素使用史: {
+    0: "无",
+    1: "有"
+  },
+  乳腺手术史: {
+    0: "无",
+    1: "有"
+  },
+  簇状钙化灶: {
+    0: "无",
+    1: "有"
+  },
+  锁骨上下区淋巴结转移情况: {
+    0: "无",
+    1: "有"
+  },
+  远处转移情况: {
+    0: "无",
+    1: "有"
+  },
+  组织学类型: {
+    1: "浸润性导管癌",
+    2: "浸润性小叶癌",
+    3: "特殊类型癌",
+    4: "原位癌"
+  },
+  组织学分级: {
+    1: "I级",
+    2: "II级",
+    3: "III级"
+  },
+  脉管癌栓: {
+    0: "无",
+    1: "有"
+  },
+  神经侵犯: {
+    0: "无",
+    1: "有"
+  },
+  ER状态: {
+    0: "0%",
+    1: "1-10%",
+    2: "≥10%"
+  },
+  PR状态: {
+    0: "0%",
+    1: "1-10%",
+    2: "≥10%"
+  },
+  HER2状态IHC: {
+    0: "无表达",
+    1: "ultra low",
+    2: "low",
+    3: "positive"
+  },
+  HER2状态FISH: {
+    0: "阴性",
+    1: "阳性"
+  },
+  Ki67: {
+    0: "＜20%",
+    1: "≥20%＜50%",
+    2: "≥50%"
+  },
+  "CK5/6": {
+    0: "阴性",
+    1: "阳性"
+  },
+  EGFR: {
+    0: "阴性",
+    1: "阳性"
+  },
+  "PD - 1 / PD - L1": {
+    0: "无表达",
+    1: "CPS1-10",
+    2: "10-20",
+    3: "≥20"
+  },
+  "BRCA1 / 2胚系突变": {
+    0: "无突变",
+    1: "有致病突变",
+    2: "未检测"
+  },
+  PI3CKA突变: {
+    0: "无突变",
+    1: "有突变",
+    2: "未检测"
+  },
+  AKT突变: {
+    0: "无突变",
+    1: "有突变",
+    2: "未检测"
+  },
+  新辅助治疗: {
+    0: "无",
+    1: "有"
+  },
+  基因组学检测情况: {
+    0: "未检测",
+    1: "微小RNA检测",
+    2: "热点基因突变",
+    3: "甲基化检测"
+  },
+  微小RNA检测: {
+    0: "无变化",
+    1: "低表达",
+    2: "高表达"
+  },
+  热点基因突变: {
+    0: "无突变",
+    1: ">5个",
+    2: ">10个"
+  },
+  甲基化检测: {
+    0: "甲基化频率<10%",
+    1: "甲基化频率<50%"
+  }
+};
+// 转换接收回的数据（0,1转成对应的文本内容）
+const convertData = data => {
+  return data.map(row => {
+    const convertedRow = { ...row };
+    // 只转换在 mappings 中定义的字段
+    for (const field in mappings) {
+      if (convertedRow[field] !== undefined && convertedRow[field] !== null) {
+        convertedRow[field] =
+          mappings[field][convertedRow[field]] || convertedRow[field];
+      }
+    }
+    return convertedRow;
+  });
 };
 const handleEdit = row => {
   console.log(row);
 };
-
+// 点击表格删除按钮
+const handleDelete = row => {
+  console.log("id", row._id);
+  deleteRecordApi(row._id).then(res => {
+    console.log("删除表格某行后的res", res);
+  });
+};
 // 双击表格某行
 const choosePatient = row => {
   outpatientStore.setSelectedPatient(row);
@@ -144,13 +294,12 @@ const handleAddBtn = () => {
 const getRecordList = () => {
   getRecordListApi()
     .then(res => {
-      console.log("res", res);
-      tableData.value = res.data;
-      console.log("tableData.value", tableData.value);
-      // total.value = res.data.total;
+      // console.log("res", res);
+      tableData.value = convertData(res.data);
+      // console.log("tableData.value", tableData.value);
     })
-    .catch(message => {
-      message(message || "获取患者列表失败", {
+    .catch(msg => {
+      message(msg || "获取患者列表失败", {
         type: "warning"
       });
     });
