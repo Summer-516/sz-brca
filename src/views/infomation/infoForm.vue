@@ -358,7 +358,10 @@
         <el-row>
           <el-col :offset="22" :span="2">
             <el-form-item>
-              <el-button type="primary" @click="submit">提交</el-button>
+              <!-- <el-button type="primary" @click="submit">提交</el-button> -->
+              <el-button type="primary" @click="submit">
+                {{ isEdit ? "保存" : "提交" }}
+              </el-button>
             </el-form-item>
           </el-col>
         </el-row>
@@ -368,10 +371,14 @@
 </template>
 
 <script setup lang="ts">
-import { reactive } from "vue";
-import { addRecordCourseApi } from "@/api/infomation";
+import { ref, onMounted, reactive } from "vue";
+import { addRecordCourseApi, updateRecordCourseApi } from "@/api/infomation";
 import { message } from "@/utils/message";
-
+import { useRoute } from "vue-router";
+import router from "@/router";
+const route = useRoute();
+const isEdit = ref(false);
+const id = ref("");
 const infoForm = reactive({
   登记号: "",
   性别: "",
@@ -473,17 +480,65 @@ const submit = () => {
   delete submitForm.CK56;
   delete submitForm.PD1;
   delete submitForm.BRCA1;
-  console.log(submitForm);
-  addRecordCourseApi(infoForm)
+  // 根据isEdit判断使用哪个API
+  const apiRequest = isEdit.value
+    ? updateRecordCourseApi(id.value, submitForm)
+    : addRecordCourseApi(submitForm);
+  apiRequest
     .then(res => {
       console.log("res", res);
-      message("提交病理信息成功", { type: "success" });
+      message(`${isEdit.value ? "修改" : "提交"}病理信息成功`, {
+        type: "success"
+      });
+      router.push("/infomation/index");
     })
     .catch(err => {
-      message(`提交病理信息失败: ${err.message || "未知错误"}`, {
-        type: "warning"
-      });
+      message(
+        `${isEdit.value ? "修改" : "提交"}病理信息失败: ${
+          err.message || "未知错误"
+        }`,
+        {
+          type: "warning"
+        }
+      );
     });
+  // addRecordCourseApi(infoForm)
+  //   .then(res => {
+  //     console.log("res", res);
+  //     message("提交病理信息成功", { type: "success" });
+  //   })
+  //   .catch(err => {
+  //     message(`提交病理信息失败: ${err.message || "未知错误"}`, {
+  //       type: "warning"
+  //     });
+  //   });
 };
+
+onMounted(() => {
+  id.value = Array.isArray(route.query.id) ? route.query.id[0] : route.query.id;
+  let rowData = route.query.rowData;
+
+  if (Array.isArray(rowData)) {
+    rowData = rowData[0];
+  }
+
+  if (typeof rowData === "string") {
+    try {
+      rowData = JSON.parse(decodeURIComponent(rowData));
+      isEdit.value = true; // 如果有rowData，说明是编辑模式
+    } catch (e) {
+      console.error("解析rowData失败:", e);
+      rowData = null;
+    }
+  }
+
+  console.log("ID:", id);
+  console.log("行数据:", rowData);
+
+  if (rowData) {
+    // 将 rowData 中的数据赋值到 infoForm
+    Object.assign(infoForm, rowData);
+  }
+});
 </script>
 <style lang="scss" scoped></style>

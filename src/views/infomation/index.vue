@@ -69,7 +69,7 @@
               size="small"
               @click="handleEdit(row)"
             >
-              编辑
+              修改
             </el-button>
             <el-button
               link
@@ -140,7 +140,8 @@ const outpatientStore = useOutpatientStore();
 // const page = ref(1);
 // const pageSize = ref(10);
 const total = ref(100);
-const tableData = ref([]);
+const orginalData = ref([]); // 原始数据
+const tableData = ref([]); // 转换后用于渲染的表格数据
 const form = reactive({
   registerNum: "",
   sex: "",
@@ -364,6 +365,14 @@ const convertData = data => {
 };
 const handleEdit = row => {
   console.log(row);
+  const originalRow = orginalData.value.find(item => item._id === row._id);
+  router.push({
+    path: "/infomation/infoForm",
+    query: {
+      id: row._id,
+      rowData: encodeURIComponent(JSON.stringify(originalRow))
+    }
+  });
 };
 // 点击表格删除按钮
 const handleDelete = row => {
@@ -387,7 +396,7 @@ const handleAddBtn = () => {
 const getRecordList = () => {
   getRecordListApi()
     .then(res => {
-      // console.log("res", res);
+      orginalData.value = res.data;
       tableData.value = convertData(res.data);
       // console.log("tableData.value", tableData.value);
     })

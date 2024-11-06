@@ -25,3 +25,10 @@ export const downloadRecordApi = data => {
     responseType: "blob"
   });
 };
+
+// 请求修改完整病理记录
+export const updateRecordCourseApi = (id, data) => {
+  return http.request<any>("put", baseUrlApi(`/record/${id}`), {
+    data
+  });
+};
