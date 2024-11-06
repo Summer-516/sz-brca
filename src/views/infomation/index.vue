@@ -32,16 +32,29 @@
       </template>
       <div class="table-title">
         <span>患者列表</span>
-        <el-button type="primary" :icon="CirclePlus" @click="handleAddBtn">
-          新增患者
-        </el-button>
+        <div class="titile-btn">
+          <el-button
+            type="success"
+            :icon="Download"
+            @click="handleExport"
+            :disabled="!selectedRows.length"
+            :loading="exporting"
+          >
+            {{ exporting ? "导出中..." : "导出选中" }}
+          </el-button>
+          <el-button type="primary" :icon="CirclePlus" @click="handleAddBtn">
+            新增患者
+          </el-button>
+        </div>
       </div>
       <el-table
         :data="tableData"
         stripe
         style="width: 100%"
         @row-dblclick="row => choosePatient(row)"
+        @selection-change="handleSelectionChange"
       >
+        <el-table-column type="selection" width="55" />
         <el-table-column prop="登记号" label="登记号" />
         <el-table-column prop="性别" label="性别" />
         <el-table-column prop="年龄" label="年龄" />
@@ -69,6 +82,28 @@
           </template>
         </el-table-column>
       </el-table>
+
+      <!-- 列选择对话框 -->
+      <el-dialog v-model="dialogVisible" title="选择要导出的列" width="30%">
+        <el-checkbox-group v-model="selectedColumns">
+          <el-checkbox
+            v-for="column in exportableColumns"
+            :key="column.prop"
+            :label="column.prop"
+          >
+            {{ column.label }}
+          </el-checkbox>
+        </el-checkbox-group>
+        <template #footer>
+          <span class="dialog-footer">
+            <el-button @click="dialogVisible = false">取消</el-button>
+            <el-button type="primary" @click="confirmExport">
+              确认导出
+            </el-button>
+          </span>
+        </template>
+      </el-dialog>
+
       <!-- <el-pagination
         v-model:current-page="page"
         v-model:page-size="pageSize"
@@ -91,8 +126,12 @@
 <script setup lang="ts">
 import { ref, reactive, onMounted } from "vue";
 // import { useRouter } from "vue-router";
-import { Search, CirclePlus, Refresh } from "@element-plus/icons-vue";
-import { getRecordListApi, deleteRecordApi } from "@/api/infomation";
+import { Search, CirclePlus, Refresh, Download } from "@element-plus/icons-vue";
+import {
+  getRecordListApi,
+  deleteRecordApi,
+  downloadRecordApi
+} from "@/api/infomation";
 import { message } from "@/utils/message";
 import { useOutpatientStore } from "@/store/modules/outpatient";
 import { useRouter } from "vue-router";
@@ -107,23 +146,76 @@ const form = reactive({
   sex: "",
   age: ""
 });
-// const initUserForm = () => {
-//   return {
-//     name: "患者",
-//     age: "34",
-//     phone: "13412341234",
-//     birthDate: ""
-//   };
-// };
-// const handleSizeChange = (val: number) => {
-//   pageSize.value = val;
-//   getPatientList();
-// };
-// const handleCurrentChange = (val: number) => {
-//   page.value = val;
-//   getPatientList();
-// };
 
+// 导出相关的新增代码
+const selectedRows = ref([]);
+const dialogVisible = ref(false);
+const selectedColumns = ref([]);
+const exporting = ref(false);
+
+// 定义可导出的列
+const exportableColumns = [
+  { prop: "登记号", label: "登记号" },
+  { prop: "性别", label: "性别" },
+  { prop: "年龄", label: "年龄" },
+  { prop: "月经状态", label: "月经状态" },
+  { prop: "乳腺癌家族史", label: "乳腺癌家族史" },
+  { prop: "长期雌激素使用史", label: "长期雌激素使用史" }
+];
+
+// 处理选择变化
+const handleSelectionChange = rows => {
+  selectedRows.value = rows;
+};
+
+// 处理导出按钮点击
+const handleExport = () => {
+  if (selectedRows.value.length === 0) {
+    message("请选择要导出的数据", { type: "warning" });
+    return;
+  }
+  dialogVisible.value = true;
+  // 默认全选所有列
+  selectedColumns.value = exportableColumns.map(col => col.prop);
+};
+// 确认导出
+const confirmExport = async () => {
+  if (exporting.value) return;
+
+  try {
+    exporting.value = true;
+
+    // 准备导出参数
+    const data = {
+      ids: selectedRows.value.map(row => row._id),
+      projection: selectedColumns.value
+    };
+    console.log("data", data);
+
+    // 调用导出接口
+    const res = await downloadRecordApi(data);
+
+    // 直接使用返回的二进制数据
+    const blob = new Blob([res], { type: "application/vnd.ms-excel" });
+
+    // 创建下载链接
+    const url = window.URL.createObjectURL(blob);
+    const link = document.createElement("a");
+    link.href = url;
+    link.setAttribute("download", `患者数据_${new Date().getTime()}.xlsx`);
+    document.body.appendChild(link);
+    link.click();
+    document.body.removeChild(link);
+    window.URL.revokeObjectURL(url);
+    message("导出成功", { type: "success" });
+    dialogVisible.value = false;
+  } catch (error) {
+    console.error("导出错误:", error);
+    message("导出失败: " + (error.message || "未知错误"), { type: "error" });
+  } finally {
+    exporting.value = false;
+  }
+};
 // 定义字段的映射关系
 const mappings = {
   性别: {
@@ -278,6 +370,7 @@ const handleDelete = row => {
   console.log("id", row._id);
   deleteRecordApi(row._id).then(res => {
     console.log("删除表格某行后的res", res);
+    getRecordList();
   });
 };
 // 双击表格某行

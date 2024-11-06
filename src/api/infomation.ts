@@ -17,3 +17,11 @@ export const getRecordListApi = () => {
 export const deleteRecordApi = id => {
   return http.request<any>("delete", baseUrlApi(`/record/${id}`));
 };
+
+// 请求下载病理记录
+export const downloadRecordApi = data => {
+  return http.request<Blob>("post", baseUrlApi(`/record/download`), {
+    data,
+    responseType: "blob"
+  });
+};
