@@ -4,7 +4,7 @@ export default {
   redirect: "/outpatient/patient",
   meta: {
     title: "门诊",
-    icon: "documentAdd",
+    icon: "officeBuilding",
     rank: 1
   },
   children: [

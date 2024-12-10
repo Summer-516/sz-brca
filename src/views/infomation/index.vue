@@ -104,7 +104,7 @@
         </template>
       </el-dialog>
 
-      <!-- <el-pagination
+      <el-pagination
         v-model:current-page="page"
         v-model:page-size="pageSize"
         :page-sizes="[10, 20, 30, 40]"
@@ -113,13 +113,13 @@
         class="pagination"
         @size-change="handleSizeChange"
         @current-change="handleCurrentChange"
-      /> -->
-      <el-pagination
+      />
+      <!-- <el-pagination
         :page-sizes="[10, 20, 30, 40]"
         :total="total"
         layout="total, sizes, prev, pager, next, jumper"
         class="pagination"
-      />
+      /> -->
     </el-card>
   </div>
 </template>
@@ -137,8 +137,8 @@ import { useOutpatientStore } from "@/store/modules/outpatient";
 import { useRouter } from "vue-router";
 const router = useRouter();
 const outpatientStore = useOutpatientStore();
-// const page = ref(1);
-// const pageSize = ref(10);
+const page = ref(1);
+const pageSize = ref(10);
 const total = ref(100);
 const orginalData = ref([]); // 原始数据
 const tableData = ref([]); // 转换后用于渲染的表格数据
@@ -147,7 +147,15 @@ const form = reactive({
   sex: "",
   age: ""
 });
-
+// 分页
+const handleSizeChange = (val: number) => {
+  pageSize.value = val;
+  getRecordList();
+};
+const handleCurrentChange = (val: number) => {
+  page.value = val;
+  getRecordList();
+};
 // 导出相关的新增代码
 const selectedRows = ref([]);
 const dialogVisible = ref(false);
@@ -394,11 +402,11 @@ const handleAddBtn = () => {
 };
 // 请求获取病理信息列表
 const getRecordList = () => {
-  getRecordListApi()
+  getRecordListApi(page.value, pageSize.value)
     .then(res => {
-      orginalData.value = res.data;
-      tableData.value = convertData(res.data);
-      // console.log("tableData.value", tableData.value);
+      total.value = res.data.total;
+      orginalData.value = res.data.list; //存一份原始数据，用于后续跳转页面传递
+      tableData.value = convertData(res.data.list);
     })
     .catch(msg => {
       message(msg || "获取患者列表失败", {

@@ -4,7 +4,7 @@ export default {
   redirect: "/user/doctorList",
   meta: {
     title: "用户管理",
-    icon: "userFilled",
+    icon: "avatar",
     rank: 2
   },
   children: [

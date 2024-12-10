@@ -18,9 +18,9 @@ const { title, abbreviation } = useNav();
         class="sidebar-logo-link"
         to="/"
       >
-        <!-- <img src="/logo.svg" alt="logo" /> -->
+        <img src="/logo.svg" alt="logo" />
         <!-- <img src="/favicon.png" alt="logo" /> -->
-        <img src="/logo.png" alt="logo" />
+        <!-- <img src="/logo.png" alt="logo" /> -->
 
         <span class="sidebar-title">{{ abbreviation }}</span>
       </router-link>
@@ -33,8 +33,9 @@ const { title, abbreviation } = useNav();
       >
         <!-- <img src="/logo.svg" alt="logo" /> -->
         <!-- <img src="/favicon.png" alt="logo" /> -->
-        <img src="/logo.png" alt="logo" />
-        <span class="sidebar-title">{{ abbreviation }}</span>
+        <!-- <img src="/logo.png" alt="logo" /> -->
+        <!-- <span class="sidebar-title">{{ abbreviation }}</span> -->
+        <span class="sidebar-title">电子病历系统</span>
       </router-link>
     </transition>
   </div>

@@ -17,7 +17,7 @@ export function viteBuildInfo(): Plugin {
       outDir = resolvedConfig.build?.outDir ?? "dist";
     },
     buildStart() {
-      console.log(bold(green(`南山医院，${blue("电子病历系统")}`)));
+      console.log(bold(green(`乳腺癌疾病云端结构化${blue("电子病历系统")}`)));
       if (config.command === "build") {
         startTime = dayjs(new Date());
       }

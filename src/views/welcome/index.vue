@@ -4,7 +4,7 @@ import Echarts from "@/components/ReEcharts/index.vue";
 import { EChartsOption } from "echarts";
 const date: Date = new Date();
 const greetings = computed(() => {
-  const text = "欢迎使用南山医院电子病历系统";
+  const text = "欢迎使用乳腺癌云端结构化电子病历系统";
   if (date.getHours() >= 0 && date.getHours() < 12) {
     return "上午好，" + text;
   } else if (date.getHours() >= 12 && date.getHours() < 18) {

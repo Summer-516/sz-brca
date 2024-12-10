@@ -1,7 +1,7 @@
 {
   "Version": "3.9.7",
-  "Title": "电子病历系统",
-  "Abbreviation": "南山医院",
+  "Title": "云端结构化电子病历系统",
+  "Abbreviation": "乳腺癌疾病",
   "FixedHeader": true,
   "HiddenSideBar": false,
   "MultiTagsCache": false,
